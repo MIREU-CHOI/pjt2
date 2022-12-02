@@ -80,6 +80,7 @@
                     app:boxBackgroundColor="@color/white"
                     app:endIconMode="clear_text">
                     <EditText
+                        android:id="@+id/et_pwd"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="11dp"
@@ -104,6 +105,7 @@
                     app:boxBackgroundColor="@color/white"
                     app:endIconMode="clear_text">
                     <EditText
+                        android:id="@+id/et_pwdChk"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="11dp"
@@ -128,6 +130,7 @@
                     app:boxBackgroundColor="@color/white"
                     app:endIconMode="clear_text">
                     <EditText
+                        android:id="@+id/et_nm"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="11dp"
@@ -218,6 +221,7 @@
                     app:boxBackgroundColor="@color/white"
                     app:endIconMode="clear_text">
                     <EditText
+                        android:id="@+id/et_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="11dp"
@@ -282,6 +286,7 @@
                     android:layout_centerInParent="true"
                     android:visibility="gone" />
             </RelativeLayout>
+<!--    -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -321,6 +326,7 @@
                     app:boxBackgroundColor="@color/white"
                     app:endIconMode="clear_text">
                     <EditText
+                        android:id="@+id/et_postAddrDetail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="11dp"

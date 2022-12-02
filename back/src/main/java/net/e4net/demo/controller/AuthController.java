@@ -25,13 +25,13 @@ public class AuthController {
 
     @PostMapping("/auth/signup")
     public ResponseEntity<MemberDTO> signup(@RequestBody MemberDTO requestDto) {
-		log.info("AuthController Layer :: Call signup Method!");
+		log.debug("AuthController Layer :: Call signup Method!");
         return ResponseEntity.ok(authService.signup(requestDto));
     }
 
     @PostMapping("/auth/login")
     public ResponseEntity<TokenDTO> login(@RequestBody MemberDTO requestDto, HttpServletRequest request) {
-    	log.info("AuthController Layer :: Call login Method!");
+    	log.debug("AuthController :: login! id: {} pwd: {} ", requestDto.getMembId(), requestDto.getMembPwd());
         return ResponseEntity.ok(authService.login(requestDto, request.getRemoteAddr()));
     }
 }

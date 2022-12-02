@@ -24,6 +24,9 @@ public interface RetrofitService {
     @POST("/auth/signup")
     Call<MembDTO> signup(@Body MembDTO membDTO);    // 바디 요청 시 사용
 
+    // "로그인" 버튼
+    @POST("/auth/login")
+    Call<TokenDTO> login(@Body MembDTO membDTO);
 
 
 

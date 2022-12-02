@@ -78,7 +78,8 @@ public class WebviewActivity extends AppCompatActivity {
         webSettings.setLoadWithOverviewMode(true);
 
         webView.loadUrl("http://192.168.10.138:8080/public/sample");
-        webView.addJavascriptInterface(new JsInterface(this, webView, sharedPreferences, editor), "android");
+        webView.addJavascriptInterface(new JsInterface
+                (this, webView, sharedPreferences, editor), "android");
     }
 
     @Override

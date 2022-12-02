@@ -35,7 +35,7 @@ public class AuthService {
     private final TokenProvider tokenProvider;
 
     public MemberDTO signup(MemberDTO requestDto) {
-    	log.info("AuthService Layer :: Call signup Method!");
+    	log.debug("AuthService Layer :: Call signup Method!");
         if (memberRepository.existsByMembId(requestDto.getMembId())) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다");
         }
@@ -47,7 +47,7 @@ public class AuthService {
     }
 
     public TokenDTO login(MemberDTO requestDto, String connectIp) {
-    	log.debug("AuthService Layer :: Call login Method!");
+    	log.debug("AuthService :: login! id: {} pwd: {} ", requestDto.getMembId(), requestDto.getMembPwd());
         UsernamePasswordAuthenticationToken authenticationToken = requestDto.toAuthentication();
         Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
         Optional<Member> member = memberRepository.findByMembId(requestDto.getMembId());

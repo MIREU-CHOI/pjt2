@@ -17,6 +17,6 @@ public class TokenDTO {
     
     private Long membSn;	// 회원번호			
     private MembCls membCls;// 회원구분 - ROLE_ADMIN:어드민, ROLE_SELLER:판매자, ROLE_USER: 사용자
-    private String membId;		// 회원 ID
+    private String membId;	// 회원 ID
     
 }
