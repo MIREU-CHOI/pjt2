@@ -1,0 +1,38 @@
+server:
+  port: 8888
+  
+spring:
+  profiles:
+    group:
+      "local": "local"
+    active: local
+
+logging:
+  level:
+    '[net.e4net.demo]': debug
+---
+#local 환경
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/edudb
+    username: edu
+    password: edu
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+#      ddl-auto: create-drop
+    show-sql: true
+#  jackson:
+#    serialization:
+#      fail-on-empty-beans: false
+#spring.jackson.serialization.fail-on-empty-beans=false
+
+jwt:
+  secret: few4f5e4w8f94a1f2s1d23f1e54fwe98f7a8f4s65fs1f3ewaf1f4a5ew4f65a1g5aw48t6aw46g8baw465bg4wa56

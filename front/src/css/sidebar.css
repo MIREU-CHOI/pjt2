@@ -1,0 +1,11 @@
+.sidebar_box {
+    display: flex;
+    /*flex-direction: row;*/
+    /*margin-top: 50px;*/
+    width: 300px;
+    height: 100vh;
+    background-color:#FFDAB9;
+    justify-content: center;
+    padding-top: 400px;
+    font-size: 25px;
+}

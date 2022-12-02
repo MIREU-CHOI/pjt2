@@ -1,0 +1,21 @@
+.home_container {
+    display: flex;
+    flex-direction: column;
+    /*justify-content:center;*/
+    align-items: center;
+    margin-top: 100px;
+}
+
+.home_info {
+    border: 1px solid black;
+    width: 500px;
+    padding: 50px;
+    margin-bottom: 20px;
+}
+
+.home_info h1 {
+    font-size: 30px;
+    font-weight: bold;
+    color: blue;
+    margin-bottom: 15px;
+}

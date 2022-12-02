@@ -1,0 +1,42 @@
+.history_box{
+    display: inline-flex;
+    flex-direction: row;
+}
+
+.history_container{
+    display: flex;
+    align-items: center;
+    /*justify-content: center;*/
+    /*margin-top: 300px;*/
+    margin-left:100px;
+}
+.history_wrap {
+    display: flex;
+    flex-direction: column;
+    /* width: 500px; */
+}
+
+.history_box{
+    display: flex;
+}
+
+button{
+    width: 150px;
+}
+.history_table td{
+    border-style: none;
+}
+
+.datev {
+    /* float: left; */
+    display: flex;
+    width: 30px;
+}
+
+.example-custom-input {
+    width: 150px;
+    /* float: left; */
+}
+.table {
+    text-align: center;
+}

@@ -1,0 +1,25 @@
+.charge_box{
+    display: inline-flex;
+    flex-direction: row;
+}
+
+.charge_container{
+    display: flex;
+    align-items: center;
+    /*justify-content: center;*/
+    /*margin-top: 300px;*/
+    margin-left:100px;
+}
+.charge_wrap {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+}
+
+.charge_box{
+    display: flex;
+}
+
+button{
+    width: 100px;
+}

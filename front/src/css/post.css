@@ -1,0 +1,35 @@
+.postmodal{
+    background : rgba(0,0,0,0.25);
+    position : fixed;
+    left:0;
+    top:0;
+    height:100%;
+    width:100%;
+}
+.postCodeStyle {
+    display: "block";
+    position: "absolute";
+    top: "20%";
+    width: "400px";
+    height: "400px";
+    padding: "7px";
+    z-index: 100;
+}
+.pop1{
+    display: "block";
+    position: "absolute";
+    width: "400px";
+    height: "100px";
+    padding: "7px";
+    z-index: 100;
+    background :  white;
+}
+.pop2{
+    display: "block";
+    position: "absolute";
+    top: "20%";
+    width: "400px";
+    height: "500px";
+    padding: "7px";
+    z-index: 100;
+}
