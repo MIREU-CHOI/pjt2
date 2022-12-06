@@ -112,7 +112,7 @@ function Login() {
         // console.log('typeof(res) =>', typeof(res));
         // console.log('typeof(resjson()) =>', typeof(res.json()));
             console.log('res.data => ',res.data);
-            localStorage.setItem('accessToken', res.data.accessToken);
+            sessionStorage.setItem('accessToken', res.data.accessToken);
             console.log('accessToken => ',localStorage.getItem("accessToken"));
             sessionStorage.setItem('membSn', res.data.membSn);
             sessionStorage.setItem('membCls', res.data.membCls);

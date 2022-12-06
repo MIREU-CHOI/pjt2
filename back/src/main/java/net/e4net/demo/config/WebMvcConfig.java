@@ -22,7 +22,7 @@ public class WebMvcConfig implements WebMvcConfigurer{
 	   @Override
 	   public void addCorsMappings(CorsRegistry registry) {
 	      registry.addMapping("/**") 		// 프로그램에서 제공하는 URL 
-	            .allowedOrigins("http://localhost:3000/", "https://online-pay.kakao.com") // 허용할 URL
+	            .allowedOrigins("http://localhost:3000/", "http://192.168.10.138:3000/", "https://online-pay.kakao.com") // 허용할 URL
 	            .allowCredentials(true) 	// 쿠키 요청을 허용한다(다른 도메인 서버에 인증하는 경우에만 사용해야하며, true 설정시 보안상 이슈가 발생할 수 있다) 
 	            .allowedMethods("OPTIONS","GET","POST",
 	                  "PUT","DELETE");		// 어떤 메서드를 허용할 것인지

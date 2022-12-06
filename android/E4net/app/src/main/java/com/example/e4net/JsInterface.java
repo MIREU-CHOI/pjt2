@@ -1,9 +1,12 @@
 package com.example.e4net;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.Toast;
@@ -20,19 +23,24 @@ public class JsInterface {
     SharedPreferences.Editor editor;
 
 
-    public JsInterface(Context context, WebView webView, SharedPreferences sharedPreferences, SharedPreferences.Editor editor){
+    public JsInterface(Context context, WebView webView){
         this.context = context;
         this.activity = (Activity) context;
         this.webView = webView;
         this.editor = editor;
-        this.sharedPreferences = sharedPreferences;
+        this.sharedPreferences = context.getSharedPreferences("e4_default", MODE_PRIVATE);
+        this.editor = sharedPreferences.edit();
 //        this.NOTI_CHANNEL_ID = NOTI_CHANNEL_ID;
 
     }
 
     @JavascriptInterface
-    public void appFunction(String msg) {
-        Toast.makeText(context, "in app="+msg, Toast.LENGTH_SHORT).show();
+    public String appFunction() {
+//        Toast.makeText(context, "in app="+msg, Toast.LENGTH_SHORT).show();
+        String data = sharedPreferences.getString("data", "default");
+        Log.d("[webview]", "onPageStarted, data => "+data);
+        return data;
+
 //        activity.runOnUiThread(new Runnable() {
 //            @Override
 //            public void run() {
@@ -40,6 +48,25 @@ public class JsInterface {
 //            }
 //        });
     }
+
+
+
+    @JavascriptInterface
+    public void appFunction2() {
+        Toast.makeText(context, "기본 function", Toast.LENGTH_SHORT).show();
+        String data = sharedPreferences.getString("data", "default");
+        Log.d("[webview]", "onPageStarted, data => "+data);
+
+//        activity.runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                webView.loadUrl("javascript:jsFunction('app msg')");
+//            }
+//        });
+    }
+
+
+
     // ---------- 실습 ----------
     // 재호
     NotificationManager manager;
@@ -76,6 +103,7 @@ public class JsInterface {
     }
 
 
+    // ===========================================================================
     // 미르 
     @JavascriptInterface
     public void appPushOnSendFunc(String msg){

@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState, useNavigate } from 'react';
 import "../css/charge.css";
 import Table from 'react-bootstrap/Table';
 import Sidebar from "./Sidebar";
@@ -6,10 +6,13 @@ import '../css/sidebar.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button   } from 'react-bootstrap';
 import axios from 'axios';
+import SidebarMR from './SidebarMR';
+import SidebarMR2 from './SidebarMR2';
 
 
 function Charge(props) {
 
+    // const navigate = useNavigate();
     const [memb, setMemb] = useState([]);
     const [money, setMoney] = useState("");
     const [expMoney, setExpMoney] = useState();
@@ -33,7 +36,7 @@ function Charge(props) {
         let membSn = sessionStorage.getItem("membSn");
         console.log('typeof(membSn) => ', typeof(membSn));
         // 수행할 함수 
-        axios.get("http://localhost:8888/member/money/"+membSn, 
+        axios.get("http://192.168.10.138:8888/member/money/"+membSn, 
         {
         }).then((res) => {
             // 서버 결제 API 성공시 로직
@@ -64,21 +67,23 @@ function Charge(props) {
         console.log('money => ' + money);
 
         const data = {
-            pg: 'kakaopay',           // PG사 (필수항목)
+            pg: 'html5_inicis',           // PG사 (필수항목)
             pay_method: 'card',           // 결제수단 (필수항목)
             merchant_uid: `mid_${new Date().getTime()}`, // 
             name: '머니 충전',           // 주문명 (필수항목)
             amount: money,               // 금액 (필수항목)
             custom_data: { name: '부가정보', desc: '세부 부가정보' },
-            buyer_name: "홍길동",          // 구매자 이름
+            buyer_name: "테스짱",          // 구매자 이름
             buyer_tel: '01012341234',       // 구매자 전화번호 (필수항목)
-            buyer_email: 'test@naver.com',// 구매자 이메일
+            buyer_email: 'alfmsp123@naver.com',// 구매자 이메일
             buyer_addr: '서울',           // 주소
-            buyer_postalcode: 12345
+            buyer_postalcode: 12345,
+            m_redirect_url : 'http://192.168.10.138:3000/member/charge'
         };
         // setMerchantUid(data.merchant_uid);
         // console.log('data.merchant_uid => ' + data.merchant_uid);
         IMP.request_pay(data, callback);
+        // navigate("/history");
     }
 
     // 콜백 
@@ -100,7 +105,7 @@ function Charge(props) {
         // let data = JSON.stringify(body);
         if (rsp.success) {
             axios({
-                url: "http://localhost:8888/member/charge",
+                url: "http://192.168.10.138:8888/member/charge",
                 method: "post",
                 headers: { "Content-Type": "application/json" },
                 data: JSON.stringify({
@@ -155,11 +160,19 @@ function Charge(props) {
     //     })
     // }
 
+    // function getMoney() {
+    //     android.getMoney();
+    // }
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
     return (
         <div className="charge_box">
             <div className="charge_sidebar">
             <Sidebar></Sidebar>
+            {/* <sidebar></sidebar> */}
+            {/* <SidebarMR></SidebarMR> */}
+            {/* <SidebarMR2></SidebarMR2> */}
+            {/* <nav class="navbar navbar-default"></nav> */}
             </div>
         <div className="charge_container">
             <div className="charge_wrap">

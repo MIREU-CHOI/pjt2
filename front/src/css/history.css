@@ -40,3 +40,10 @@ button{
 .table {
     text-align: center;
 }
+
+@media (max-width: 1000px) {
+    .history_wrap {
+        width: 100%;
+        /* width: calc(100% - 100px); */
+    }
+}

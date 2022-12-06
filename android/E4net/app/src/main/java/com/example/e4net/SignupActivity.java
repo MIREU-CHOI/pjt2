@@ -1,12 +1,8 @@
 package com.example.e4net;
 
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -177,7 +173,7 @@ public class SignupActivity extends AppCompatActivity {
                 Log.i("[postSear]", "주소 검색 클릭");
                 int status = NetworkStatus.getConnectivityStatus(getApplicationContext());
                 if(status == NetworkStatus.TYPE_MOBILE || status == NetworkStatus.TYPE_WIFI) {
-                    Intent i = new Intent(getApplicationContext(), WebviewActivity.class);
+                    Intent i = new Intent(getApplicationContext(), DaumPostActivity.class);
                     startActivityForResult(i, SEARCH_ADDRESS_ACTIVITY);
                 }else {
                     Toast.makeText(getApplicationContext(), "인터넷 연결을 확인해주세요.", Toast.LENGTH_SHORT).show();

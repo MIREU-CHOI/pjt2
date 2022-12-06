@@ -16,10 +16,9 @@ import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 
-public class WebviewActivity extends AppCompatActivity {
+public class DaumPostActivity extends AppCompatActivity {
 
     private WebView wv_search_address;
     private ProgressBar progress;
@@ -42,7 +41,7 @@ public class WebviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_webview);
+        setContentView(R.layout.activity_daum_post);
 
         progress = findViewById(R.id.web_progress);
         wv_search_address = findViewById(R.id.wv_search_address);

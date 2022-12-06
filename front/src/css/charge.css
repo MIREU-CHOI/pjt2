@@ -23,3 +23,10 @@
 button{
     width: 100px;
 }
+
+@media (max-width: 1000px) {
+    .charge_wrap {
+        width: 100%;
+        /* width: calc(100% - 100px); */
+    }
+}

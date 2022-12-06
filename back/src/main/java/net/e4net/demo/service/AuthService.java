@@ -53,7 +53,7 @@ public class AuthService {
         Optional<Member> member = memberRepository.findByMembId(requestDto.getMembId());
         // 로그인 이력
         Long membSn = member.get().getMembSn();
-        log.debug("membSn => {}",membSn);
+        log.debug("AuthService login membSn => {}",membSn);
         membLoginHstRepository.save(MembLoginHst.createMembLoginHst(membSn, connectIp));
         return tokenProvider.generateTokenDto(authentication, member);
     }

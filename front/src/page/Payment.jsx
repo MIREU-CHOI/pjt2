@@ -25,7 +25,7 @@ const Payment = (effect, deps) => {
     
     // ================ 결제 페이지로 올 때 "가맹점" 정보 가져오기 ================
     useEffect(() => {
-        axios.get("http://localhost:8888/member/merchants", 
+        axios.get("http://192.168.10.138:8888/member/merchants", 
         {
         }).then((res) => {
             // console.log('typeof(res) =>', typeof(res))
@@ -47,7 +47,7 @@ const Payment = (effect, deps) => {
         let merchantSn = e.target.value;
         console.log('typeof merchantSn =>', typeof(merchantSn));
 
-        axios.get("http://localhost:8888/member/merchants/"+merchantSn, 
+        axios.get("http://192.168.10.138:8888/member/merchants/"+merchantSn, 
         {
         }).then((res) => {
             // console.log('typeof(res) =>', typeof(res))
@@ -67,7 +67,7 @@ const Payment = (effect, deps) => {
         setGoodsNo(e.target.value);
         let goodsNo = e.target.value;
         console.log('typeof goodsNo =>', typeof(goodsNo));
-        axios.get("http://localhost:8888/member/goods/"+goodsNo, 
+        axios.get("http://192.168.10.138:8888/member/goods/"+goodsNo, 
         {
         }).then((res) => {
             // console.log('typeof(res) =>', typeof(res))
@@ -122,7 +122,7 @@ const Payment = (effect, deps) => {
             goodsAmt: goodsAmt,     // 결제금액
             // transferTyCd: '02',// 거래종류코드 (01:충전, 02:사용, 03:환전) <= 나중에 코드까지 buyHst에서 받아서 메서드 합쳐서 간결하게 만들어도 좋을 듯? 결제수단에 따른 if else...
         }
-        axios.post("http://localhost:8888/member/payMoney", data, {
+        axios.post("http://192.168.10.138:8888/member/payMoney", data, {
         headers: {
             "Content-Type": "application/json",
         }
@@ -142,19 +142,20 @@ const Payment = (effect, deps) => {
 
     // 가맹점 식별하기
     const onPayCard = (e) => {
-        console.log('카카오페이로 결제하자!');
+        console.log('KG 이니시스로 결제하자!');
         const data = {
-            pg: 'kakaopay',           // PG사 (필수항목)
+            pg: 'html5_inicis',           // PG사 (필수항목)
             pay_method: 'card',           // 결제수단 (필수항목)
             merchant_uid: `mid_${new Date().getTime()}`, // 결제금액 (필수항목)
             name: 'E4. 결제 테스트',           // 주문명 (필수항목)
             amount: goodsAmt,               // 금액 (필수항목)
             custom_data: { name: '부가정보', desc: '세부 부가정보' },
-            buyer_name: "홍길동",          // 구매자 이름
+            buyer_name: "최고고",          // 구매자 이름
             buyer_tel: '01012341234',       // 구매자 전화번호 (필수항목)
-            buyer_email: 'test@naver.com',// 구매자 이메일
+            buyer_email: 'alfmsp123@naver.com',// 구매자 이메일
             buyer_addr: '서울',           // 주소
-            buyer_postalcode: 12345
+            buyer_postalcode: 12345,
+            m_redirect_url : 'http://192.168.10.138:3000/member/payCard'
         };
         IMP.request_pay(data, callback);
     }// >>>>>>> 콜백 
@@ -163,7 +164,7 @@ const Payment = (effect, deps) => {
         if (success) {
             // axios로 HTTP 요청
             axios({
-                url: "http://localhost:8888/member/payCard",
+                url: "http://192.168.10.138:8888/member/payCard",
                 method: "post",
                 headers: { "Content-Type": "application/json" },
                 data: {

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import net.e4net.demo.dto.BuyHstDTO;
 import net.e4net.demo.dto.ChangePasswordRequestDTO;
@@ -103,6 +104,7 @@ public class MemberController {
 	// ============= 회원 머니 조회 =============
 	@GetMapping("/member/money/{membSn}")
 	public ResponseEntity<MoneyDTO> selectMoney(@PathVariable("membSn") Long membSn){
+//		log.debug("")
 		log.info("MemberController :: selectMoney membSn:{}",membSn);
 		MoneyDTO dto = memberService.selectMoney(membSn);
 		return ResponseEntity.status(HttpStatus.OK).body(dto);

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".WebviewActivity">
+    tools:context=".DaumPostActivity">
 
     <!--상단 툴바-->
     <androidx.appcompat.widget.Toolbar

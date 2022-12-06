@@ -42,7 +42,7 @@ function History(props) {
     
     useEffect(() => { 
         let membSn = sessionStorage.getItem("membSn");
-        let url = "http://localhost:8888/member/moneyTransferHst/"+membSn+"/"
+        let url = "http://192.168.10.138:8888/member/moneyTransferHst/"+membSn+"/"
             +indexOfLastPost+"?page="+(currentPage-1) + "&size=" + postPerPage;
             // indexOfLastPost <= 이게 백에서 rownum 으로 파라미터 받음 
         console.log('membSn :',membSn, 'url :',url);
