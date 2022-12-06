@@ -92,7 +92,7 @@ public class DaumPostActivity extends AppCompatActivity {
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onPermissionRequest(final PermissionRequest request) {
-                Log.d("[Webview]", "onPageFinished: \n request => "+request.getResources().toString());
+                Log.d("[Webview]", "onPermissionRequest: \n request => "+request.getResources().toString());
                 request.grant(request.getResources());
             }
         });

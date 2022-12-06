@@ -22,7 +22,6 @@ public class JsInterface {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
-
     public JsInterface(Context context, WebView webView){
         this.context = context;
         this.activity = (Activity) context;
@@ -31,32 +30,19 @@ public class JsInterface {
         this.sharedPreferences = context.getSharedPreferences("e4_default", MODE_PRIVATE);
         this.editor = sharedPreferences.edit();
 //        this.NOTI_CHANNEL_ID = NOTI_CHANNEL_ID;
-
     }
-
     @JavascriptInterface
     public String appFunction() {
-//        Toast.makeText(context, "in app="+msg, Toast.LENGTH_SHORT).show();
         String data = sharedPreferences.getString("data", "default");
         Log.d("[webview]", "onPageStarted, data => "+data);
         return data;
-
-//        activity.runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                webView.loadUrl("javascript:jsFunction('app msg')");
-//            }
-//        });
     }
 
-
-
     @JavascriptInterface
-    public void appFunction2() {
+    public void appFunction2() {    // 이 함수로 사용
         Toast.makeText(context, "기본 function", Toast.LENGTH_SHORT).show();
         String data = sharedPreferences.getString("data", "default");
         Log.d("[webview]", "onPageStarted, data => "+data);
-
 //        activity.runOnUiThread(new Runnable() {
 //            @Override
 //            public void run() {
@@ -64,6 +50,7 @@ public class JsInterface {
 //            }
 //        });
     }
+
 
 
 

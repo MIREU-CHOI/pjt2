@@ -29,6 +29,8 @@ function History(props) {
     const [postPerPage,setpostPerPage] = useState(10); // 한 페이지에 보여질 아이템 수 
     const [indexOfLastPost, setIndexOfLastPost] = useState(0); // 현재 페이지의 마지막 아이템 인덱스
 
+    const [payMeanCd, setPayMeanCd] = useState("");
+
 
     const setPage = (e) => {
         setCurrentPage(e)
@@ -61,8 +63,36 @@ function History(props) {
         })
     }, [currentPage]); 
 
+    // onClickPayMeanCd
+    const onClickPayMeanCd = (e) => {
+        setPayMeanCd(e.target.value);
+        console.log('결제수단 클릭! => ', e.target.value);
+    }
+    const onPayMeanCdSearch = (e) => {
+        let membSn = sessionStorage.getItem("membSn");
+        let url = "http://192.168.10.138:8888/member/moneyTransferHstByPayMean/"+membSn+"/"
+            +indexOfLastPost+"?page="+(currentPage-1) + "&size=" + postPerPage+
+            "&payMeanCd="+payMeanCd;
+            // indexOfLastPost <= 이게 백에서 rownum 으로 파라미터 받음 
+        console.log('membSn :',membSn, 'url :',url);
+        axios.post(url, 
+        {
+        }).then((res) => {
+            console.log('typeof(res) =>', typeof(res))
+            console.log('조인!!! res =>', res)
+            console.log('typeof res.data => ', typeof(res.data));
+            console.log('조인!!! res.data.content => ', res.data.content);
+            setCount(res.data.totalElements);
+            console.log("currentPage =>", currentPage);
+            setHstList(res.data.content);
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+    
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////
     return (
     <div className="history_box">
         <div className="history_sidebar">
@@ -70,6 +100,7 @@ function History(props) {
         </div>
     <div className="history_container">
         <div className="history_wrap">
+        <form onSubmit={onPayMeanCdSearch}>
         <Table className="table table-borderless table-sm">
             <tbody>
             <tr>
@@ -85,7 +116,8 @@ function History(props) {
                     endDate={endDate}
                     minDate={new Date()}
                     />
-                </td> ~
+                </td>
+                <td>~</td>
                 <td><DatePicker 
                     selected={endDate}
                     onChange={date => setEndDate(date)}
@@ -100,13 +132,13 @@ function History(props) {
                 </td>
                 <td >결제수단</td>
                 <td>
-                    <select defaultValue={"03"}>
+                    <select defaultValue={"03"} onChange={onClickPayMeanCd}>
                         <option value="03">자체머니결제</option>
                         <option value="01">카드</option>
                         <option value="02">계좌이체</option>
                     </select>
                 </td>
-                <td><button className='btn btn-secondary'>조회</button></td>
+                <td><button className='btn btn-secondary' type='submit'>조회</button></td>
             </tr>
             </tbody>
         </Table>
@@ -134,6 +166,8 @@ function History(props) {
             
 
         </div>
+        </form>
+        
         </div>
     </div>
     </div>

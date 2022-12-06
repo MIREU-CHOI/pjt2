@@ -67,18 +67,17 @@ function Charge(props) {
         console.log('money => ' + money);
 
         const data = {
-            pg: 'html5_inicis',           // PG사 (필수항목)
+            pg: 'danal_tpay',           // PG사 (필수항목)
             pay_method: 'card',           // 결제수단 (필수항목)
             merchant_uid: `mid_${new Date().getTime()}`, // 
-            name: '머니 충전',           // 주문명 (필수항목)
+            name: 'E4. 머니 충전',           // 주문명 (필수항목)
             amount: money,               // 금액 (필수항목)
             custom_data: { name: '부가정보', desc: '세부 부가정보' },
-            buyer_name: "테스짱",          // 구매자 이름
+            buyer_name: sessionStorage.getItem('membId'),          // 구매자 이름
             buyer_tel: '01012341234',       // 구매자 전화번호 (필수항목)
             buyer_email: 'alfmsp123@naver.com',// 구매자 이메일
             buyer_addr: '서울',           // 주소
-            buyer_postalcode: 12345,
-            m_redirect_url : 'http://192.168.10.138:3000/member/charge'
+            buyer_postalcode: 12345
         };
         // setMerchantUid(data.merchant_uid);
         // console.log('data.merchant_uid => ' + data.merchant_uid);

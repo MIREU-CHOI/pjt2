@@ -51,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         tv_signUp = findViewById(R.id.tv_signUp);
         tv_findPwd = findViewById(R.id.tv_findPwd);
 
+
         // ***** 레트로핏 생성 *****
         retrofit = new Retrofit.Builder()
                 .baseUrl("http://192.168.10.138:8888")

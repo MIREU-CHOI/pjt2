@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+	<!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+    <!-- iamport.payment.js -->
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+<title>iamport</title>
+</head>
+
+<body>
+<!-- 아임포트 자바스크립트는 jQuery 기반으로 개발되었습니다 -->
+<script type="text/javascript">
+
+iamportFunc();
+
+function iamportFunc() {
+	
+	var IMP = window.IMP; 	// 생략가능 ?
+	IMP.init("imp08030724");// 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+	
+	function requestPay() {
+	    IMP.request_pay({
+	        pg : 'html5_inicis',
+	        pay_method : 'card',
+	        merchant_uid: 'mid_'+new Date().getTime(),
+	        name : '머니 충전',
+	        amount : 100,
+	        buyer_email : 'alfmsp123@naver.com',
+	        buyer_name : '아임포트 기술지원팀',
+	        buyer_tel : '010-1234-5678',
+	        buyer_addr : '서울특별시 강남구 삼성동',
+	        buyer_postcode : '123-456',
+	        m_redirect_url: 'http://192.168.10.138:8888/member/charge'
+	    }, function (rsp) { // callback
+	    	console.log('rsp => ', rsp.data);
+	    	if (rsp.success) {            // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
+	            // jQuery로 HTTP 요청
+	            jQuery.ajax({
+	                url: "{서버의 결제 정보를 받는 가맹점 endpoint}", 
+	                method: "POST",
+	                headers: { "Content-Type": "application/json" },
+	                data: {
+	                    imp_uid: rsp.imp_uid,            //결제 고유번호     
+	                    merchant_uid: rsp.merchant_uid   
+	                    //주문번호
+	                }
+	            }).done(function (data) {
+	              	// 가맹점 서버 결제 API 성공시 로직
+	           		console.log('=========== 머니 충전 성공하였습니다 ============');
+	           		alert('머니 충전 성공하였습니다.');
+	            })
+	          } else {
+	            	alert("결제에 실패하였습니다. 에러 내용: " +  rsp.error_msg);
+	          }
+	    });
+	}
+}
+// function savePay() {
+// 	var a = document.getElementById('text').value;
+// 	android.savetext(a);
+// }
+</script>
+</body>
+</html>

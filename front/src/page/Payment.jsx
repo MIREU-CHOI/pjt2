@@ -14,6 +14,7 @@ const Payment = (effect, deps) => {
     const [goodsList, setGoodsList] = useState();
     const [goodsAmt, setGoodsAmt] = useState(0);
     const [goodsNo, setGoodsNo] = useState("");
+    const [goodsNm, setGoodsNm] = useState("");
     const [money, setMoney] = useState("");
     const [payMeanCd, setPayMeanCd] = useState("03"); // 결제수단코드 
     
@@ -75,6 +76,7 @@ const Payment = (effect, deps) => {
             // console.log('typeof(res.data) =>', typeof(res.data))
             console.log('res.data =>', res.data)
             setGoodsAmt(res.data.goodsAmt);
+            setGoodsNm(res.data.goodsNm);
             // console.log('typeof goodsAmt =>', typeof(goodsAmt))
             // console.log('goodsAmt =>', goodsAmt)
             console.log('=========================')
@@ -142,22 +144,23 @@ const Payment = (effect, deps) => {
 
     // 가맹점 식별하기
     const onPayCard = (e) => {
-        console.log('KG 이니시스로 결제하자!');
+        console.log('다날 로 결제하자!');
         const data = {
-            pg: 'html5_inicis',           // PG사 (필수항목)
+            pg: 'danal_tpay',           // PG사 (필수항목)
             pay_method: 'card',           // 결제수단 (필수항목)
             merchant_uid: `mid_${new Date().getTime()}`, // 결제금액 (필수항목)
-            name: 'E4. 결제 테스트',           // 주문명 (필수항목)
+            name: goodsNm,           // 주문명 (필수항목)
             amount: goodsAmt,               // 금액 (필수항목)
             custom_data: { name: '부가정보', desc: '세부 부가정보' },
-            buyer_name: "최고고",          // 구매자 이름
+            buyer_name: sessionStorage.getItem('membId'),          // 구매자 이름
             buyer_tel: '01012341234',       // 구매자 전화번호 (필수항목)
             buyer_email: 'alfmsp123@naver.com',// 구매자 이메일
             buyer_addr: '서울',           // 주소
             buyer_postalcode: 12345,
             m_redirect_url : 'http://192.168.10.138:3000/member/payCard'
         };
-        IMP.request_pay(data, callback);
+        IMP.request_pay(data, callback);    
+        // 원래 안드로이드 웹뷰에선 callback 실행 안되는데 다날로 하면 됨!
     }// >>>>>>> 콜백 
     const callback = (rsp) => {
         const {success, error_msg, imp_uid, merchant_uid, pay_method, paid_amount, status} = rsp;

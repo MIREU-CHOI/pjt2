@@ -206,10 +206,17 @@ public class MemberService {
 		money.setMoneyBlce(res);
 		return dto;
 	}
-	// 거래내역 페이지 (4) 리팩토링 + 페이지네이션 
+	// * 거래내역 페이지 (4) 리팩토링 + 페이지네이션 
 	public Page<MoneyTransferHstDTO> getMembMoneyTransferHst(
 			Pageable pageable, Long membSn, int rownum){
 		Page<MoneyTransferHstDTO> res = querydslRepositoryImpl.getAllMoneyHst(pageable, membSn, rownum);
+		return res;
+	}
+	// * 거래내역 페이지 - 결제수단 조회 기능 
+	public Page<MoneyTransferHstDTO> getAllMoneyHstByPayMeanCd(
+			Pageable pageable, Long membSn, int rownum, String payMeanCd){
+		Page<MoneyTransferHstDTO> res = querydslRepositoryImpl
+				.getAllMoneyHstByPayMeanCd(pageable, membSn, rownum, payMeanCd);
 		return res;
 	}
 	

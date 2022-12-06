@@ -63,7 +63,7 @@
                     android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:backgroundTint="@color/bootstrap_brand_danger"
+                    android:backgroundTint="@color/colorGoogleSignIn"
                     android:text="중복확인" />
             </LinearLayout>
 
@@ -84,7 +84,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="11dp"
-                        android:layout_marginRight="@dimen/bootstrap_alert_default_font_size"
+                        android:layout_marginRight="5dp"
                         android:ems="10"
                         android:hint="비밀번호 (*)"
                         android:inputType="text"
@@ -109,7 +109,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="11dp"
-                        android:layout_marginRight="@dimen/bootstrap_alert_default_font_size"
+                        android:layout_marginRight="5dp"
                         android:ems="10"
                         android:hint="비밀번호 확인 (*)"
                         android:inputType="text"
@@ -134,7 +134,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="11dp"
-                        android:layout_marginRight="@dimen/bootstrap_alert_default_font_size"
+                        android:layout_marginRight="5dp"
                         android:ems="10"
                         android:hint="성명 (*)"
                         android:inputType="text"
@@ -172,7 +172,7 @@
                     android:layout_marginTop="10dp"
                     android:text="인증번호 전송"
                     android:textSize="13dp"
-                    android:backgroundTint="@color/bootstrap_brand_danger"/>
+                    android:backgroundTint="@color/colorGoogleSignIn"/>
             </LinearLayout>
 
             <LinearLayout
@@ -205,7 +205,7 @@
                     android:layout_marginTop="10dp"
                     android:text="인증번호 확인"
                     android:textSize="13dp"
-                    android:backgroundTint="@color/bootstrap_brand_danger"/>
+                    android:backgroundTint="@color/colorGoogleSignIn"/>
             </LinearLayout>
 
             <LinearLayout
@@ -225,7 +225,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="11dp"
-                        android:layout_marginRight="@dimen/bootstrap_alert_default_font_size"
+                        android:layout_marginRight="5dp"
                         android:ems="10"
                         android:hint="이메일"
                         android:inputType="text"
@@ -266,7 +266,7 @@
                     android:layout_marginTop="10dp"
                     android:text="우편번호 검색"
                     android:textSize="13dp"
-                    android:backgroundTint="@color/bootstrap_brand_danger"/>
+                    android:backgroundTint="@color/colorGoogleSignIn"/>
             </LinearLayout>
 <!-- 우편번호 - 화면이 로딩될 때까지 뜨는 화면    -->
             <RelativeLayout
@@ -305,7 +305,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="11dp"
-                        android:layout_marginRight="@dimen/bootstrap_alert_default_font_size"
+                        android:layout_marginRight="5dp"
                         android:ems="10"
                         android:hint="주소 (*)"
                         android:inputType="text"
@@ -330,7 +330,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="11dp"
-                        android:layout_marginRight="@dimen/bootstrap_alert_default_font_size"
+                        android:layout_marginRight="5dp"
                         android:ems="10"
                         android:hint="상세주소"
                         android:inputType="text"
@@ -346,7 +346,7 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="45dp"
                 android:text="가입하기"
-                android:backgroundTint="@color/bootstrap_brand_danger"/>
+                android:backgroundTint="@color/colorGoogleSignIn"/>
 
             <Button
                 android:id="@+id/btn_goLogin"
@@ -356,11 +356,7 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="45dp"
                 android:text="로그인하러 가자"
-                app:bootstrapBrand="danger"
-                app:bootstrapSize="lg"
-                app:buttonMode="regular"
-                app:roundedCorners="true"
-                app:showOutline="false" />
+                android:backgroundTint="@color/colorGoogleSignIn" />
             <!--
             <Button
                 android:layout_width="100dp"

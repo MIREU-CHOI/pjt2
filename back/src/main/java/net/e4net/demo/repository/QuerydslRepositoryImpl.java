@@ -77,4 +77,38 @@ public class QuerydslRepositoryImpl implements QuerydslRepositoryCustom{
 		return new PageImpl<>(moneyHstDto, pageable, count);
 	}
 
+	@Override
+	public Page<MoneyTransferHstDTO> getAllMoneyHstByPayMeanCd(Pageable pageable, 
+			Long membSn, int rownum, String payMeanCd) {
+		log.debug("QueryDSL :: 거래내역 가져오자 회원번호=>{}, row=>{}",membSn, rownum);
+		List<MoneyTransferHst> moneyHst 
+				= jpaQueryFactory.selectFrom(mth)
+										.leftJoin(mth.buyHst, buyHst)
+										.fetchJoin()
+										.leftJoin(buyHst.goods, goods)
+										.fetchJoin()
+										.leftJoin(goods.merchant, merchant)
+										.fetchJoin()
+										.where(
+												mth.member.membSn
+												.eq(membSn)
+											.and(
+												mth.payMeanCd
+												.eq(payMeanCd)
+												)
+										)
+										.orderBy(mth.moneyTransferHstSn.desc())
+										.offset(rownum).limit(pageable.getPageSize())
+										.fetch();
+		List<MoneyTransferHstDTO> moneyHstDto = moneyHst.stream()
+										.map(MoneyTransferHstDTO::toDto).collect(Collectors.toList());
+		int count = jpaQueryFactory.selectFrom(mth)
+										.where(
+												mth.member.membSn
+												.eq(membSn))
+										.fetch().size();
+		log.debug("QueryDSL :: count=>{}",count);
+		return new PageImpl<>(moneyHstDto, pageable, count);
+	}
+
 }
