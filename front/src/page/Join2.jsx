@@ -52,11 +52,6 @@ function Join2(props) {
     const [enroll_company, setEnroll_company] = useState({
         address:'',
     });
-    
-    // const [popup, setPopup] = useState(false);
-    // const openpost = () => {
-    //       setPopup(!popup);
-    // }
 
     // 팝업창 상태 관리
     const [isPopupOpen, setIsPopupOpen] = useState(false)
@@ -95,7 +90,7 @@ function Join2(props) {
     
     const [zonecode, setZonecode] = useState("");
 
-    /* email */
+    /* =============== email =============== */
     const firstEmail = useCallback((e) => {
         e.preventDefault();
         setEmail1(e.target.value);
@@ -107,6 +102,7 @@ function Join2(props) {
     console.log('emailAddr =>',emailAddr); //ex) hello@naver.com
     
     useEffect(()=> {
+        console.log("============ 회원가입 페이지 ============ ");
         setMembCls("ROLE_USER");    // 회원가입 페이지 실행 시, 회원구분을 user 로 기본값 설정 
     }, []);
 
@@ -120,7 +116,7 @@ function Join2(props) {
         }); 
     }, [zonecode, fulladdress]);
 
-console.log(`zipCd => ${val.zipCd}`);
+    console.log(`zipCd => ${val.zipCd}`);
     useEffect(() => {
         setVal({
             ...val, // 스프레드 연산자 
@@ -129,7 +125,7 @@ console.log(`zipCd => ${val.zipCd}`);
         })
     }, [emailAddr, membCls]);
 
-    // --------------------- 회원구분 클릭 시 ------------------------
+    // =============== 회원구분 클릭 시 ===============
     const handleChange = e => {
         // e.preventDefault();  // <= 이걸 하면 라디오 클릭이 이상함 (두번 클릭해야 됨)
         const { name, value } = e.target;

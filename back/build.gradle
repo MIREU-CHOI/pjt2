@@ -1,7 +1,7 @@
 plugins {
+	id 'java'
 	id 'org.springframework.boot' version '2.7.5'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-	id 'java'
 	//querydsl 추가
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
@@ -18,6 +18,8 @@ configurations {
 
 repositories {
 	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }	// 
+	maven { url 'https://repo.spring.io/snapshot' }		//
 }
 
 dependencies {
@@ -62,6 +64,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 	
+	// for 안드로이드 FCM 푸시알람 
+	// https://mvnrepository.com/artifact/com.google.firebase/firebase-admin
+	implementation group: 'com.google.firebase', name: 'firebase-admin', version: '8.1.0'
 
 }
 

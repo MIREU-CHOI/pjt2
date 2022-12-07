@@ -67,20 +67,13 @@
       appFunction();
       android.appFunction2();
       function appFunction() {
-    
         let userData = android.appFunction();
         let userDataObject = JSON.parse(userData);
         sessionStorage.setItem('membSn', userDataObject.membSn);
         sessionStorage.setItem('membId', userDataObject.membId);
         sessionStorage.setItem('accessToken', userDataObject.accessToken);
         sessionStorage.setItem('membCls', userDataObject.membCls);
-   
       }
-  
-  
-  
-    
-  
   
     </script>
 

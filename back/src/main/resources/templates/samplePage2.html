@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>복습페이지</title>
+</head>
+<body>
+
+  <input type="text" id="id" placeholder="id"/>
+  <br><br>
+
+  <!-- input 값 호출   -->
+  <button onclick = "alert(document.getElementById('id').value)">입력 값</button>
+  <br><br>
+
+  <!-- 안드로이드 서버 저장 On-->
+  <button onclick="doCheckTrue()">저장 on</button>
+  <!-- 안드로이드 서버 저장 off-->
+  <button onclick="doCheckfalse()">저장 Off</button>
+
+  <button onclick="callAppFuc()">저장 값 호출</button>
+
+
+  <script>
+    function callAppFuc(){
+        alert(test.textSave());
+    }
+
+    function doCheckTrue(){
+        return true;
+    }
+
+    function doCheckfalse(){
+        return false;
+    }
+  </script>
+</body>
+</html>

@@ -154,25 +154,27 @@ public class MemberController {
 		return ResponseEntity.status(HttpStatus.OK).body(dto); // 머니거래이력 페이지로 가자! 
 	}
 	
-	// =========== 머니거래내역 페이지 =========== 
+	// =========== ** 머니거래내역 페이지 =========== 
 	@PostMapping("/member/moneyTransferHst/{membSn}/{rownum}")
 	public ResponseEntity<Page<MoneyTransferHstDTO>> getMembMoneyTransferHst(
 			@PathVariable("membSn") Long membSn, 
 			@PathVariable("rownum") int rownum,
 			@PageableDefault(page = 1, size = 10) Pageable page){
 		log.info("MemberController :: 거래내역 가져오자 sn=> {}",membSn);
-		Page<MoneyTransferHstDTO> list = memberService.getMembMoneyTransferHst(page,membSn,rownum);
+		Page<MoneyTransferHstDTO> list = memberService.getAllMembMoneyTransferHst(page,membSn,rownum);
 		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
-	// =========== 머니거래내역 페이지 - 결제수단 조회 기능 payMeanCd
+	// =========== ** 머니거래내역 페이지 - 결제수단 조회 payMeanCd & 날짜 조회 startDate ~ endDate 
 	@PostMapping("/member/moneyTransferHstByPayMean/{membSn}/{rownum}")
 	public ResponseEntity<Page<MoneyTransferHstDTO>> getMembMoneyTransferHst(
-			@PathVariable("membSn") Long membSn, 
-			@PathVariable("rownum") int rownum,
-//				@PathVariable("payMeanCd") String payMeanCd,
-			@PageableDefault(page = 1, size = 10) Pageable page, @RequestParam String payMeanCd){
-		log.info("MemberController 결제수단~!! => {}",payMeanCd);
-		Page<MoneyTransferHstDTO> list = memberService.getAllMoneyHstByPayMeanCd(page,membSn,rownum, payMeanCd);
+			@PathVariable("membSn") Long membSn
+			, @PathVariable("rownum") int rownum
+			, @PageableDefault(page = 1, size = 10) Pageable page
+			, @RequestParam String payMeanCd
+			, @RequestParam String startDate
+			, @RequestParam String endDate){
+		log.debug("MemberController :: 거래내역 \n  회원번호=>{}, row=>{} 결제수단=>{} 날짜{}~{}",membSn, rownum, payMeanCd, startDate, endDate);
+		Page<MoneyTransferHstDTO> list = memberService.getMoneyHstByPayMeanCd(page,membSn,rownum, payMeanCd, startDate, endDate);
 		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
 //	@GetMapping("/member/moneyTransferHst/{membSn}")

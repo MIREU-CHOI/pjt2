@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <button onclick="location.href='https://naver.com'"> 네이버 이동 </button>
+    <button onclick="alert('web clinet msg')">알럿 호출</button>
+    <button onclick="callAppFuc()">앱 함수 호출</button>
+    <script>
+        function callAppFuc(){
+            android.appFunction('web clinet msg');
+        }
+
+        function jsFunction(msg){
+            alert("syj = in client = " + msg);
+        }
+    </script>
+</body>
+</html>

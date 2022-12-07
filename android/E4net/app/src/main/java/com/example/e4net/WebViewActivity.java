@@ -97,7 +97,8 @@ public class WebViewActivity extends AppCompatActivity {
                 (new JsInterface(this, webView), "android");
 
         // charge / payment / history
-        webView.loadUrl("http://192.168.10.138:3000/charge");
+//        webView.loadUrl("http://192.168.10.138:3000/charge");
+        webView.loadUrl("http://192.168.35.117:3000/charge");
 //        webView.loadUrl("http://192.168.10.138:8080/public/sample");
 
 

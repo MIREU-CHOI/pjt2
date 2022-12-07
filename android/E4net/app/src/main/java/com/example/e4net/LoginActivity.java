@@ -54,7 +54,8 @@ public class LoginActivity extends AppCompatActivity {
 
         // ***** 레트로핏 생성 *****
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.10.138:8888")
+//                .baseUrl("http://192.168.10.138:8888")
+                .baseUrl("http://192.168.35.117:8888")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         retrofitService = retrofit.create(RetrofitService.class);

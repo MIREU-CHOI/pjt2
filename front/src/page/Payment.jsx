@@ -21,12 +21,12 @@ const Payment = (effect, deps) => {
     const onMoneyHandler = (event) => {
         setMoney(event.currentTarget.value);
     }
-    // console.log('typeof mercList =>', typeof(mercList))
-    // console.log('mercList =>', mercList)
     
     // ================ 결제 페이지로 올 때 "가맹점" 정보 가져오기 ================
     useEffect(() => {
-        axios.get("http://192.168.10.138:8888/member/merchants", 
+        console.log("============ 결제 페이지 ============ ");
+        // axios.get("http://192.168.10.138:8888/member/merchants", 
+        axios.get("http://192.168.35.117:8888/member/merchants", 
         {
         }).then((res) => {
             // console.log('typeof(res) =>', typeof(res))
@@ -48,7 +48,8 @@ const Payment = (effect, deps) => {
         let merchantSn = e.target.value;
         console.log('typeof merchantSn =>', typeof(merchantSn));
 
-        axios.get("http://192.168.10.138:8888/member/merchants/"+merchantSn, 
+        // axios.get("http://192.168.10.138:8888/member/merchants/"+merchantSn, 
+        axios.get("http://192.168.35.117:8888/member/merchants/"+merchantSn, 
         {
         }).then((res) => {
             // console.log('typeof(res) =>', typeof(res))
@@ -68,7 +69,8 @@ const Payment = (effect, deps) => {
         setGoodsNo(e.target.value);
         let goodsNo = e.target.value;
         console.log('typeof goodsNo =>', typeof(goodsNo));
-        axios.get("http://192.168.10.138:8888/member/goods/"+goodsNo, 
+        // axios.get("http://192.168.10.138:8888/member/goods/"+goodsNo, 
+        axios.get("http://192.168.35.117:8888/member/goods/"+goodsNo, 
         {
         }).then((res) => {
             // console.log('typeof(res) =>', typeof(res))
@@ -96,21 +98,17 @@ const Payment = (effect, deps) => {
     const onPay = (e) => {
         console.log('payMeanCd vvv => ', payMeanCd);
         if(payMeanCd == "03"){ // 선불머니 결제 - 미리 충전해놓은 것
-            console.log('여기1');
+            console.log('머니 선택 - 03');
             onPayMoney();
         } else if (payMeanCd == "01") { // 카드 결제 - 카카오페이로 직접 결제 
-            console.log('여기2');
+            console.log('카드 선택 - 01');
             onPayCard();
         } else if (payMeanCd == "02") { // 계좌이체 결제 
-            console.log('여기3');
-            // onPayAccount();
-        } else {
-            console.log('여기4');
-
+            console.log('계좌이체 선택 - 02');
         }
     }
 
-    // --------------- (1) 결제 - 선불머니 --------------- payMoney
+    // --------------- (1) 결제 - 선불머니 :: 결제수단코드 03 --------------- payMoney
     const onPayMoney = (event) => {
         // event.preventDefault();
         console.log('선불머니로 결제하자!');
@@ -124,21 +122,22 @@ const Payment = (effect, deps) => {
             goodsAmt: goodsAmt,     // 결제금액
             // transferTyCd: '02',// 거래종류코드 (01:충전, 02:사용, 03:환전) <= 나중에 코드까지 buyHst에서 받아서 메서드 합쳐서 간결하게 만들어도 좋을 듯? 결제수단에 따른 if else...
         }
-        axios.post("http://192.168.10.138:8888/member/payMoney", data, {
+        // axios.post("http://192.168.10.138:8888/member/payMoney", data, {
+        axios.post("http://192.168.35.117:8888/member/payMoney", data, {
         headers: {
             "Content-Type": "application/json",
         }
         }).then(res => {
-            console.log('typeof(res) =>', typeof(res));
+            // console.log('typeof(res) =>', typeof(res));
             console.log('res.data => ',res.data);
-            alert('결제 성공하였습니다.');
-            // navigate("/charge")
+            window.confirm('결제 성공하였습니다.');
+            navigate("/history");
         }).catch((error) => {
             console.log(error);
         })
     }
 
-    // --------------- (2) 결제 - 카드 --------------- payCard >>> 아임포트 - 카카오페이 ================
+    // --------------- (2) 결제 - 카드 :: 결제수단코드 01 --------------- payCard >>> 아임포트 - 카카오페이 ================
     const { IMP } = window;
     IMP.init('imp08030724'); // 결제 데이터 정의
 
@@ -157,7 +156,7 @@ const Payment = (effect, deps) => {
             buyer_email: 'alfmsp123@naver.com',// 구매자 이메일
             buyer_addr: '서울',           // 주소
             buyer_postalcode: 12345,
-            m_redirect_url : 'http://192.168.10.138:3000/member/payCard'
+            // m_redirect_url : 'http://192.168.10.138:3000/member/payCard'
         };
         IMP.request_pay(data, callback);    
         // 원래 안드로이드 웹뷰에선 callback 실행 안되는데 다날로 하면 됨!
@@ -167,7 +166,8 @@ const Payment = (effect, deps) => {
         if (success) {
             // axios로 HTTP 요청
             axios({
-                url: "http://192.168.10.138:8888/member/payCard",
+                // url: "http://192.168.10.138:8888/member/payCard",
+                url: "http://192.168.35.117:8888/member/payCard",
                 method: "post",
                 headers: { "Content-Type": "application/json" },
                 data: {
@@ -175,8 +175,10 @@ const Payment = (effect, deps) => {
                     goods : {goodsNo : goodsNo },
                     goodsAmt: goodsAmt,
                 }
-            }).then((data) => {
-                alert('결제 성공하였습니다.');
+            }).then((rsp) => {
+                console.log('결제 rsp =>', rsp.data);
+                window.confirm('결제 성공하였습니다.');
+                navigate("/history");
             }).catch((error) => {
                 console.log(error);
             })

@@ -195,28 +195,29 @@ public class MemberService {
 		BuyHst buyHst = modelMapper.map(dto, BuyHst.class);
 		buyHstRepository.save(buyHst);
 		// 2) 머니거래이력 insert moneyTransferHst ----- builder 자체가 영속성으로 인해 알아서 save 해준다 ?
-//		MoneyTransferHst mth = MoneyTransferHst.builder()
-//							.buyHst(buyHst)
-//							.member(Member.builder().membSn(membSn).build())
-//							.transferTyCd("02")
-//							.transferAmt(amt)
-//							.payMeanCd("03")
-//							.build();
+		MoneyTransferHst mth = MoneyTransferHst.builder()
+							.buyHst(buyHst)
+							.member(Member.builder().membSn(membSn).build())
+							.transferTyCd("02")
+							.transferAmt(amt)
+							.payMeanCd("01")
+							.build();
 		// 3) 회원머니 update membMoney ----- 변경을 감지해서 값 수정해줌 (알아서 save(update) 해주는 느낌 ?)
 		money.setMoneyBlce(res);
 		return dto;
 	}
 	// * 거래내역 페이지 (4) 리팩토링 + 페이지네이션 
-	public Page<MoneyTransferHstDTO> getMembMoneyTransferHst(
+	public Page<MoneyTransferHstDTO> getAllMembMoneyTransferHst(
 			Pageable pageable, Long membSn, int rownum){
-		Page<MoneyTransferHstDTO> res = querydslRepositoryImpl.getAllMoneyHst(pageable, membSn, rownum);
+		Page<MoneyTransferHstDTO> res = 
+				querydslRepositoryImpl.getAllMoneyHst(pageable, membSn, rownum);
 		return res;
 	}
 	// * 거래내역 페이지 - 결제수단 조회 기능 
-	public Page<MoneyTransferHstDTO> getAllMoneyHstByPayMeanCd(
-			Pageable pageable, Long membSn, int rownum, String payMeanCd){
-		Page<MoneyTransferHstDTO> res = querydslRepositoryImpl
-				.getAllMoneyHstByPayMeanCd(pageable, membSn, rownum, payMeanCd);
+	public Page<MoneyTransferHstDTO> getMoneyHstByPayMeanCd(
+			Pageable pageable, Long membSn, int rownum, String payMeanCd, String startDate, String endDate){
+		Page<MoneyTransferHstDTO> res = 
+				querydslRepositoryImpl.getMoneyHstByPayMeanCd(pageable, membSn, rownum, payMeanCd, startDate, endDate);
 		return res;
 	}
 	

@@ -11,12 +11,11 @@ import SidebarMR2 from './SidebarMR2';
 
 
 function Charge(props) {
-
     // const navigate = useNavigate();
     const [memb, setMemb] = useState([]);
-    const [money, setMoney] = useState("");
-    const [expMoney, setExpMoney] = useState();
-    const [transSn, setTransSn] = useState(0);
+    const [money, setMoney] = useState("");     // 머니 "충전"액
+    const [expMoney, setExpMoney] = useState(); // 충전"예정"결과액 
+    const [transSn, setTransSn] = useState(0);  // 충전 후 거래이력"번호"
     
     const onMoneyHandler = (event) => {
         setMoney(event.currentTarget.value);
@@ -33,10 +32,12 @@ function Charge(props) {
 
     // ================ 충전 페이지로 올 때 로그인한 회원의 머니 정보 가져오기 ================
     useEffect(() => { // useEffect(함수, 배열) : 컴포넌트가 화면에 나타났을 때 자동 실행
+        console.log("============ 머니충전 페이지 ============ ");
         let membSn = sessionStorage.getItem("membSn");
         console.log('typeof(membSn) => ', typeof(membSn));
         // 수행할 함수 
-        axios.get("http://192.168.10.138:8888/member/money/"+membSn, 
+        // axios.get("http://192.168.10.138:8888/member/money/"+membSn, 
+        axios.get("http://192.168.35.117:8888/member/money/"+membSn, 
         {
         }).then((res) => {
             // 서버 결제 API 성공시 로직
@@ -104,7 +105,9 @@ function Charge(props) {
         // let data = JSON.stringify(body);
         if (rsp.success) {
             axios({
-                url: "http://192.168.10.138:8888/member/charge",
+                // url: "http://192.168.10.138:8888/member/charge",
+                url: "http://192.168.35.117:8888/member/charge",
+                method: "post",
                 method: "post",
                 headers: { "Content-Type": "application/json" },
                 data: JSON.stringify({
@@ -118,50 +121,27 @@ function Charge(props) {
             })
             .then((res) => {
                 // 서버 결제 API 성공시 로직
-                alert('머니 충전 성공하였습니다.');
+                // alert('머니 충전 성공하였습니다.');
+                var returnVal = window.confirm('머니 충전 성공하였습니다.');
+                // corfirm 으로 바꿔서 해보기 !!!!!!!
                 console.log('typeof(res) => ', typeof(res));
                 console.log('res => ', res);
                 console.log('res.data => ', res.data);
-                console.log('res.data.moneyTransferHstSn => ', res.data.moneyTransferHstSn);
-                setTransSn(res.data.moneyTransferHstSn);
-                setMoney("");
-                // moneyUpdate();
-                console.log('=========== 머니 충전 성공하였습니다 ============');
+                if(returnVal) {
+                    setTransSn(res.data.moneyTransferHstSn);
+                    console.log('확인 누르면 거래이력번호 생김 \n '+
+                        'res.data.moneyTransferHstSn => ', res.data.moneyTransferHstSn);
+                    setMoney("");
+                    console.log('머니충전액 입력창 => ', money);
+                    // moneyUpdate();
+                    console.log('=========== 머니 충전 성공하였습니다 ============');
+                }
             })
         } else {
             alert(`머니 충전 실패하였습니다. : ${error_msg}`);
         }
     }
 
-    // const moneyUpdate = (event) => {
-    //     event.preventDefault();
-    //     console.log('moneyUpdate 실행!');
-
-    //     let body = {
-    //         membSn: sessionStorage.getItem('membSn')
-    //         // 금액, 
-    //     }
-    //     const data = JSON.stringify(body);
-
-    //     axios.get("http://localhost:8888/member/moneyUpdate/" +  data,
-    //     {
-    //     // headers: {
-    //     //     "Content-Type": "application/json",
-    //     //     }
-    //     }).then((res) => {
-    //         console.log(res.data);
-    //         console.log('회원 머니 수정 완료');
-    //         // if(res.data == false) {
-    //         //     alert("이미 존재하는 ID 입니다.")                     
-    //         // } else{
-    //         //     alert("사용 가능한 ID 입니다.")
-    //         // }
-    //     })
-    // }
-
-    // function getMoney() {
-    //     android.getMoney();
-    // }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
     return (

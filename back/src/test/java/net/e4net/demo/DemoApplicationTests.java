@@ -34,7 +34,7 @@ class DemoApplicationTests {
 //                "1500호", "2022-11-08-20:11:11"
 //        );
 		Member member = Member.builder()
-						.membSn(123l)
+						.membSn(1l)
 						.build();
 		
         repository.save(member);
