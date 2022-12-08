@@ -96,7 +96,8 @@ public class DaumPostActivity extends AppCompatActivity {
                 request.grant(request.getResources());
             }
         });
-        wv_search_address.loadUrl("http://192.168.10.138:8888/android/post");
+        wv_search_address.loadUrl(StaticFinalLabelsClass.SERVER_IP_ADDRESS+"/android/post");
+//        wv_search_address.loadUrl("http://192.168.10.138:8888"+"/android/post");
 //        wv_search_address.loadUrl("file:///android_asset/www/daum_address.html");
 //        boolean showVal = wv_search_address.isShown();
 //        boolean actiVal = wv_search_address.isActivated();

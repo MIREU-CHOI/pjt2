@@ -1,10 +1,14 @@
 package net.e4net.demo.repository;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
@@ -41,6 +45,9 @@ public class QuerydslRepositoryImpl implements QuerydslRepositoryCustom{
 	
 	private final QMember memb = QMember.member;
 	
+	private final static String TIMESTAMPFORMATSTART = " 00:00:00.000000";
+	private final static String TIMESTAMPFORMATEND = " 23:59:59.999999";
+	
 	@Override
 	public List<MoneyTransferHst> findByMoneyTransferHst(Long membSn) {
 		return jpaQueryFactory.selectFrom(mth)
@@ -59,6 +66,7 @@ public class QuerydslRepositoryImpl implements QuerydslRepositoryCustom{
 	@Override
 	public Page<MoneyTransferHstDTO> getAllMoneyHst(Pageable pageable, Long membSn, int rownum) {
 		log.debug("QueryDSL :: 거래내역 가져오자 회원번호=>{}, row=>{}",membSn, rownum);
+		log.debug("\n    팩토리11111");
 		List<MoneyTransferHst> moneyHst 
 				= jpaQueryFactory.selectFrom(mth)
 										.leftJoin(mth.buyHst, buyHst)
@@ -87,23 +95,34 @@ public class QuerydslRepositoryImpl implements QuerydslRepositoryCustom{
 	@Override
 	public Page<MoneyTransferHstDTO> getMoneyHstByPayMeanCd(Pageable pageable, 
 			Long membSn, int rownum, String payMeanCd, String startDate, String endDate) {
-		log.debug("QueryDSL :: 거래내역 \n  결제수단=>{} 날짜{}~{}", payMeanCd, startDate, endDate);
+		log.debug("QueryDSL :: 거래내역 \n  결제수단=>{} \n  startDate {} ~ endDate {}", payMeanCd, startDate, endDate);
 //		DateUtils du = DateUtils.getInstance();
 //		String startRes = 
-		SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
-		Date start=null;
-		try {
-			start = format.parse(startDate);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		StringTemplate startRes = Expressions.stringTemplate(startDate, "%Y-%m-%d");
-		log.debug("start => {}",start);
-		StringTemplate endRes = Expressions.stringTemplate(endDate, "%Y-%m-%d");
-		log.debug("endRes => {}",endRes);
+//		SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
+		/** String을 Date로 변환 */
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA);
+		Timestamp startRes = Timestamp.valueOf(startDate + TIMESTAMPFORMATSTART);
+		Timestamp endRes = Timestamp.valueOf(endDate + TIMESTAMPFORMATEND);
+		log.debug("startRes => {},\n endRes => {}",startRes, endRes);
+//		log.debug("\n 	startRes => {} \n	formatter.format(startRes) => {}"
+//				+ "\n	endRes => {}"
+//				,startRes, formatter.format(startRes), endRes);
+		
+//		Date start=null;
+//		try {
+//			start = format.parse(startDate);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		StringTemplate startRes = Expressions.stringTemplate(startDate, "%Y-%m-%d");
+		
+//		log.debug("\n startDate => {} \n endDate => {}",startDate, endDate);
+//		StringTemplate endRes = Expressions.stringTemplate(endDate, "%Y-%m-%d");
+//		log.debug("endRes => {}",endRes);
 		List<MoneyTransferHst> moneyHst = new ArrayList<>();
-		if (payMeanCd.equals("00")) {
-			moneyHst = jpaQueryFactory.selectFrom(mth)
+			if (startDate != null && endDate != null && payMeanCd.equals("00")) {
+				log.debug("\n    팩토리22222 \n 결제수단 => {}", payMeanCd);
+				moneyHst = jpaQueryFactory.selectFrom(mth)
 					.leftJoin(mth.buyHst, buyHst)
 					.fetchJoin()
 					.leftJoin(buyHst.goods, goods)
@@ -111,50 +130,61 @@ public class QuerydslRepositoryImpl implements QuerydslRepositoryCustom{
 					.leftJoin(goods.merchant, merchant)
 					.fetchJoin()
 					.where(
-							mth.member.membSn
-							.eq(membSn)
-							.and(
-									mth.payMeanCd
-									.eq(payMeanCd)
-									)
-							)
+							mth.member.membSn.eq(membSn)
+						.and(
+							mth.frstRegistDt.between(startRes, endRes)
+						)
+					)
 					.orderBy(mth.moneyTransferHstSn.desc())
 					.offset(rownum).limit(pageable.getPageSize())
 					.fetch();
-		} else if (startDate != null && endDate != null) {
-//			moneyHst = jpaQueryFactory.selectFrom(mth)
-//					.leftJoin(mth.buyHst, buyHst)
-//					.fetchJoin()
-//					.leftJoin(buyHst.goods, goods)
-//					.fetchJoin()
-//					.leftJoin(goods.merchant, merchant)
-//					.fetchJoin()
-//					.where(
-//							mth.member.membSn.eq(membSn)
-//						.and(
-//							mth.payMeanCd.eq(payMeanCd)
-//						)
-//						.and(Expressions.currentTimestamp().between(
-//								startRes, endRes)
-//								
-//						)
-//					)
-//					.orderBy(mth.moneyTransferHstSn.desc())
-//					.offset(rownum).limit(pageable.getPageSize())
-//					.fetch();
-		}
+				System.out.println("moneyHst => "+moneyHst.toString());
+			}else if (!payMeanCd.equals("00")){
+				log.debug("\n    팩토리33333 \n 결제수단 => {}", payMeanCd);
+				moneyHst = jpaQueryFactory.selectFrom(mth)
+						.leftJoin(mth.buyHst, buyHst)
+						.fetchJoin()
+						.leftJoin(buyHst.goods, goods)
+						.fetchJoin()
+						.leftJoin(goods.merchant, merchant)
+						.fetchJoin()
+						.where(
+								mth.member.membSn.eq(membSn)
+							.and(
+								mth.payMeanCd.eq(payMeanCd)
+							)
+							.and(
+								mth.frstRegistDt.between(startRes, endRes)
+							)
+						)
+						.orderBy(mth.moneyTransferHstSn.desc())
+						.offset(rownum).limit(pageable.getPageSize())
+						.fetch();
+				System.out.println("moneyHst => "+moneyHst.toString());
+			} 
 		List<MoneyTransferHstDTO> moneyHstDto = moneyHst.stream()
 										.map(MoneyTransferHstDTO::toDto).collect(Collectors.toList());
-		int count = jpaQueryFactory.selectFrom(mth)
-										.where(
-												mth.member.membSn
-												.eq(membSn)
-											.and(
-												mth.payMeanCd
-												.eq(payMeanCd)
-												)
-										)
-										.fetch().size();
+		int count = 0;
+		if (startDate != null && endDate != null && payMeanCd.equals("00")) {		
+				count = jpaQueryFactory.selectFrom(mth)
+									.where(
+											mth.member.membSn.eq(membSn)
+										.and(mth.frstRegistDt.between(startRes, endRes))
+									)
+								.fetch().size();
+				log.debug("\n 팩토리22222 count => {}",count);
+		} else if (!payMeanCd.equals("00")) {
+				count = jpaQueryFactory.selectFrom(mth)
+								.where(
+										mth.member.membSn.eq(membSn)
+									.and(
+										mth.payMeanCd.eq(payMeanCd)
+									)
+									.and(mth.frstRegistDt.between(startRes, endRes))
+								)
+								.fetch().size();
+				log.debug("\n 팩토리33333 count => {}",count);
+		}
 		log.debug("QueryDSL :: count=>{}",count);
 		return new PageImpl<>(moneyHstDto, pageable, count);
 	}

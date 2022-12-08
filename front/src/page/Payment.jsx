@@ -26,7 +26,7 @@ const Payment = (effect, deps) => {
     useEffect(() => {
         console.log("============ 결제 페이지 ============ ");
         // axios.get("http://192.168.10.138:8888/member/merchants", 
-        axios.get("http://192.168.35.117:8888/member/merchants", 
+        axios.get(global.ipAddress+":8888/member/merchants", 
         {
         }).then((res) => {
             // console.log('typeof(res) =>', typeof(res))
@@ -49,7 +49,7 @@ const Payment = (effect, deps) => {
         console.log('typeof merchantSn =>', typeof(merchantSn));
 
         // axios.get("http://192.168.10.138:8888/member/merchants/"+merchantSn, 
-        axios.get("http://192.168.35.117:8888/member/merchants/"+merchantSn, 
+        axios.get(global.ipAddress+":8888/member/merchants/"+merchantSn, 
         {
         }).then((res) => {
             // console.log('typeof(res) =>', typeof(res))
@@ -70,7 +70,7 @@ const Payment = (effect, deps) => {
         let goodsNo = e.target.value;
         console.log('typeof goodsNo =>', typeof(goodsNo));
         // axios.get("http://192.168.10.138:8888/member/goods/"+goodsNo, 
-        axios.get("http://192.168.35.117:8888/member/goods/"+goodsNo, 
+        axios.get(global.ipAddress+":8888/member/goods/"+goodsNo, 
         {
         }).then((res) => {
             // console.log('typeof(res) =>', typeof(res))
@@ -123,7 +123,7 @@ const Payment = (effect, deps) => {
             // transferTyCd: '02',// 거래종류코드 (01:충전, 02:사용, 03:환전) <= 나중에 코드까지 buyHst에서 받아서 메서드 합쳐서 간결하게 만들어도 좋을 듯? 결제수단에 따른 if else...
         }
         // axios.post("http://192.168.10.138:8888/member/payMoney", data, {
-        axios.post("http://192.168.35.117:8888/member/payMoney", data, {
+        axios.post(global.ipAddress+":8888/member/payMoney", data, {
         headers: {
             "Content-Type": "application/json",
         }
@@ -167,7 +167,7 @@ const Payment = (effect, deps) => {
             // axios로 HTTP 요청
             axios({
                 // url: "http://192.168.10.138:8888/member/payCard",
-                url: "http://192.168.35.117:8888/member/payCard",
+                url: global.ipAddress+":8888/member/payCard",
                 method: "post",
                 headers: { "Content-Type": "application/json" },
                 data: {

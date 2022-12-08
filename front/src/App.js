@@ -15,6 +15,9 @@ import Payment from './page/Payment';
 
 
 function App() {
+  let ipAddress = "http://192.168.10.138";
+  global.ipAddress = ipAddress;
+
   return (
     <div className="App">
       <Routes>

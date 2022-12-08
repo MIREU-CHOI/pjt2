@@ -174,7 +174,16 @@ public class MemberController {
 			, @RequestParam String startDate
 			, @RequestParam String endDate){
 		log.debug("MemberController :: 거래내역 \n  회원번호=>{}, row=>{} 결제수단=>{} 날짜{}~{}",membSn, rownum, payMeanCd, startDate, endDate);
-		Page<MoneyTransferHstDTO> list = memberService.getMoneyHstByPayMeanCd(page,membSn,rownum, payMeanCd, startDate, endDate);
+		String syear = startDate.substring(0,4);
+		String smonth = startDate.substring(4,6);
+		String sday = startDate.substring(6);
+		String startRes = syear+"-"+smonth+"-"+sday;
+		String eyear = endDate.substring(0,4);
+		String emonth = endDate.substring(4,6);
+		String eday = endDate.substring(6);
+		String endRes = eyear+"-"+emonth+"-"+eday;
+		
+		Page<MoneyTransferHstDTO> list = memberService.getMoneyHstByPayMeanCd(page,membSn,rownum, payMeanCd, startRes, endRes);
 		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
 //	@GetMapping("/member/moneyTransferHst/{membSn}")

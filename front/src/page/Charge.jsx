@@ -37,7 +37,7 @@ function Charge(props) {
         console.log('typeof(membSn) => ', typeof(membSn));
         // 수행할 함수 
         // axios.get("http://192.168.10.138:8888/member/money/"+membSn, 
-        axios.get("http://192.168.35.117:8888/member/money/"+membSn, 
+        axios.get(global.ipAddress+":8888/member/money/"+membSn, 
         {
         }).then((res) => {
             // 서버 결제 API 성공시 로직
@@ -105,8 +105,8 @@ function Charge(props) {
         // let data = JSON.stringify(body);
         if (rsp.success) {
             axios({
-                // url: "http://192.168.10.138:8888/member/charge",
-                url: "http://192.168.35.117:8888/member/charge",
+                url: global.ipAddress+":8888/member/charge",
+                // url: "http://192.168.35.117:8888/member/charge",
                 method: "post",
                 method: "post",
                 headers: { "Content-Type": "application/json" },

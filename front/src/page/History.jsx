@@ -62,8 +62,8 @@ function History(props) {
         let membSn = sessionStorage.getItem("membSn");
         console.log('payMeanCd => ', payMeanCd);
         console.log('membSn => ', membSn);
-        // let url = "http://192.168.10.138:8888/member/moneyTransferHst/"+membSn+"/"
-        let url = "http://192.168.35.117:8888/member/moneyTransferHst/"+membSn+"/"
+        let url = global.ipAddress+":8888/member/moneyTransferHst/"+membSn+"/"
+        // let url = "http://192.168.35.117:8888/member/moneyTransferHst/"+membSn+"/"
             +indexOfLastPost+"?page="+(currentPage-1) + "&size=" + postPerPage;
             // indexOfLastPost <= 이게 백에서 rownum 으로 파라미터 받음 
         console.log('membSn :',membSn, 'url :',url);
@@ -92,21 +92,26 @@ function History(props) {
     // ============ "조회" 버튼 ver.2 - onSearch ============ startDate endDate
     const onSearch = (e) => {
         // e.preventDefault();
+        
         // 거래기간 startDate 
-        // var startRes = parseInt(moment(startDate).format().split("T")[0].replaceAll("-",""));
-        // setStartDate(startRes);
+        var startRes = parseInt(moment(startDate).format().split("T")[0].replaceAll("-","")); // ver.1
+        setStartDate(startRes);
+        // var startRes = parseInt(moment(startDate).format().split("T")[0]);   // ver.2
+
         // 거래기간 endDate 
-        // var endRes = parseInt(moment(endDate).format().split("T")[0].replaceAll("-",""));
-        // setEndDate(endRes);
-        // console.log(`startRes : ${startRes} , startDate : ${startDate}`);
+        var endRes = parseInt(moment(endDate).format().split("T")[0].replaceAll("-",""));
+        setEndDate(endRes);
+        console.log(`startRes : ${startRes} , startDate : ${startDate} \n   payMeanCd : ${payMeanCd}`);
+        
         // if(typeof(startRes) === 'number'){
             let membSn = sessionStorage.getItem("membSn");
             console.log('거래기간 & 결제수단 조회 ~~~~~~~~~~~~~~~~~~~~~')
             console.log(`startDate : ${startDate} , endDate : ${endDate}`);
             // let url = "http://192.168.10.138:8888/member/moneyTransferHstByPayMean/"+membSn+"/"
-            let url = "http://192.168.35.117:8888/member/moneyTransferHstByPayMean/"+membSn+"/"
-                +indexOfLastPost+"?page="+(currentPage-1) + "&size=" + postPerPage+
-                "&payMeanCd="+payMeanCd+"&startDate="+startDate+"&endDate="+endDate;
+            let url = global.ipAddress+":8888/member/moneyTransferHstByPayMean/"+membSn+"/"
+                +indexOfLastPost+"?page="+(currentPage-1) + "&size=" + postPerPage+"&payMeanCd="+payMeanCd
+                +"&startDate="+startRes+"&endDate="+endRes;
+                // +"&startDate="+startDate+"&endDate="+endDate;
                 // indexOfLastPost <= 이게 백에서 rownum 으로 파라미터 받음 
             // console.log('membSn :', membSn, 'url :', url);
             axios.post(url)
@@ -126,7 +131,7 @@ function History(props) {
     const onPayMeanCdSearch = (e) => {
         let membSn = sessionStorage.getItem("membSn");
         // let url = "http://192.168.10.138:8888/member/moneyTransferHstByPayMean/"+membSn+"/"
-        let url = "http://192.168.35.117:8888/member/moneyTransferHstByPayMean/"+membSn+"/"
+        let url = global.ipAddress+":8888/member/moneyTransferHstByPayMean/"+membSn+"/"
             +indexOfLastPost+"?page="+(currentPage-1) + "&size=" + postPerPage+
             "&payMeanCd="+payMeanCd;
             // indexOfLastPost <= 이게 백에서 rownum 으로 파라미터 받음 
@@ -156,7 +161,8 @@ function History(props) {
             <tbody>
             <tr>
                 <td>거래기간</td>
-                <td><DatePicker 
+                <td>
+                    {/* <DatePicker 
                     selected={startDate}
                     onChange={date => setStartDate(date)}
                     customInput={<ExampleCustomInput />}
@@ -166,10 +172,12 @@ function History(props) {
                     startDate={startDate}
                     endDate={endDate}
                     minDate={""}
-                    />
+                    /> */}
+                    <input type='date' onChange={date => setStartDate(date)} dateFormat="yyyy년 MM월 dd일"/>
                 </td>
                 <td>~</td>
-                <td><DatePicker 
+                <td>
+                    {/* <DatePicker 
                     selected={endDate}
                     onChange={date => setEndDate(date)}
                     customInput={<ExampleCustomInput />}
@@ -179,7 +187,8 @@ function History(props) {
                     endDate={endDate}
                     startDate={startDate}
                     minDate={startDate}
-                    />
+                    /> */}
+                    <input type='date' onChange={date => setEndDate(date)} dateFormat="yyyy년 MM월 dd일"/>
                 </td>
                 <td >결제수단</td>
                 <td>

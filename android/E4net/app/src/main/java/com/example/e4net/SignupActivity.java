@@ -77,7 +77,8 @@ public class SignupActivity extends AppCompatActivity {
 
         // ***** 레트로핏 생성 *****
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.10.138:8888")
+                .baseUrl(StaticFinalLabelsClass.SERVER_IP_ADDRESS)
+//                .baseUrl("http://192.168.10.138:8888")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         retrofitService = retrofit.create(RetrofitService.class);
