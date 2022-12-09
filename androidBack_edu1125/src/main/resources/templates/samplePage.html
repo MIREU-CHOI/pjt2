@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<button onclick="location.href='https://naver.com'">네이버로 이동</button>
+	<button onclick="alert('web client msg');">알럿 호출</button>
+	<button onclick="callAppFunc()">앱 함수 호출</button>
+	<script>
+		function callAppFunc(){
+			android.appFunction('web client msg');
+		}
+		function jsFunction(msg){
+			alert("in client="+msg);
+		}
+	</script>
+</body>
+</html>

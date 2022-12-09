@@ -160,7 +160,7 @@ public class MemberController {
 			@PathVariable("membSn") Long membSn, 
 			@PathVariable("rownum") int rownum,
 			@PageableDefault(page = 1, size = 10) Pageable page){
-		log.info("MemberController :: 거래내역 가져오자 sn=> {}",membSn);
+		log.info("MemberController :: 전체 거래내역 sn=> {}",membSn);
 		Page<MoneyTransferHstDTO> list = memberService.getAllMembMoneyTransferHst(page,membSn,rownum);
 		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
@@ -173,17 +173,18 @@ public class MemberController {
 			, @RequestParam String payMeanCd
 			, @RequestParam String startDate
 			, @RequestParam String endDate){
-		log.debug("MemberController :: 거래내역 \n  회원번호=>{}, row=>{} 결제수단=>{} 날짜{}~{}",membSn, rownum, payMeanCd, startDate, endDate);
-		String syear = startDate.substring(0,4);
-		String smonth = startDate.substring(4,6);
-		String sday = startDate.substring(6);
-		String startRes = syear+"-"+smonth+"-"+sday;
-		String eyear = endDate.substring(0,4);
-		String emonth = endDate.substring(4,6);
-		String eday = endDate.substring(6);
-		String endRes = eyear+"-"+emonth+"-"+eday;
+		log.debug("MemberController :: 조회 거래내역 \n	회원번호 => {}, row => {} 결제수단 => {} "
+				+ "\n	날짜 {} ~ {}",membSn, rownum, payMeanCd, startDate, endDate);
+//		String syear = startDate.substring(0,4);
+//		String smonth = startDate.substring(4,6);
+//		String sday = startDate.substring(6);
+//		String startRes = syear+"-"+smonth+"-"+sday;
+//		String eyear = endDate.substring(0,4);
+//		String emonth = endDate.substring(4,6);
+//		String eday = endDate.substring(6);
+//		String endRes = eyear+"-"+emonth+"-"+eday;
 		
-		Page<MoneyTransferHstDTO> list = memberService.getMoneyHstByPayMeanCd(page,membSn,rownum, payMeanCd, startRes, endRes);
+		Page<MoneyTransferHstDTO> list = memberService.getMoneyHstByPayMeanCd(page,membSn,rownum, payMeanCd, startDate, endDate);
 		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
 //	@GetMapping("/member/moneyTransferHst/{membSn}")

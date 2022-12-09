@@ -3,11 +3,11 @@ package net.e4net.demo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
-public class AndroidApplication {
+//@SpringBootApplication
+//public class AndroidApplication {
 
 //	public static void main(String[] args) {
 //		SpringApplication.run(AndroidApplication.class, args);
 //	}
 
-}
+//}

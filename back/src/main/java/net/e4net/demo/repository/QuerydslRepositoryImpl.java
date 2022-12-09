@@ -65,7 +65,7 @@ public class QuerydslRepositoryImpl implements QuerydslRepositoryCustom{
 
 	@Override
 	public Page<MoneyTransferHstDTO> getAllMoneyHst(Pageable pageable, Long membSn, int rownum) {
-		log.debug("QueryDSL :: 거래내역 가져오자 회원번호=>{}, row=>{}",membSn, rownum);
+		log.debug("QueryDSL :: 전체 거래내역 \n	회원번호=>{}, row=>{}",membSn, rownum);
 		log.debug("\n    팩토리11111");
 		List<MoneyTransferHst> moneyHst 
 				= jpaQueryFactory.selectFrom(mth)
@@ -88,14 +88,14 @@ public class QuerydslRepositoryImpl implements QuerydslRepositoryCustom{
 												mth.member.membSn
 												.eq(membSn))
 										.fetch().size();
-		log.debug("QueryDSL :: count=>{}",count);
+		log.debug("\n	팩토리11111 count=>{}",count);
 		return new PageImpl<>(moneyHstDto, pageable, count);
 	}
 
 	@Override
 	public Page<MoneyTransferHstDTO> getMoneyHstByPayMeanCd(Pageable pageable, 
 			Long membSn, int rownum, String payMeanCd, String startDate, String endDate) {
-		log.debug("QueryDSL :: 거래내역 \n  결제수단=>{} \n  startDate {} ~ endDate {}", payMeanCd, startDate, endDate);
+		log.debug("QueryDSL :: 거래내역 \n	결제수단=>{} \n	startDate {} ~ endDate {}", payMeanCd, startDate, endDate);
 //		DateUtils du = DateUtils.getInstance();
 //		String startRes = 
 //		SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
@@ -120,9 +120,28 @@ public class QuerydslRepositoryImpl implements QuerydslRepositoryCustom{
 //		StringTemplate endRes = Expressions.stringTemplate(endDate, "%Y-%m-%d");
 //		log.debug("endRes => {}",endRes);
 		List<MoneyTransferHst> moneyHst = new ArrayList<>();
-			if (startDate != null && endDate != null && payMeanCd.equals("00")) {
-				log.debug("\n    팩토리22222 \n 결제수단 => {}", payMeanCd);
-				moneyHst = jpaQueryFactory.selectFrom(mth)
+		if (startDate != null && endDate != null && payMeanCd.equals("00")) {
+			log.debug("\n    팩토리22222 \n 결제수단 => {}", payMeanCd);
+			moneyHst = jpaQueryFactory.selectFrom(mth)
+				.leftJoin(mth.buyHst, buyHst)
+				.fetchJoin()
+				.leftJoin(buyHst.goods, goods)
+				.fetchJoin()
+				.leftJoin(goods.merchant, merchant)
+				.fetchJoin()
+				.where(
+						mth.member.membSn.eq(membSn)
+					.and(
+						mth.frstRegistDt.between(startRes, endRes)
+					)
+				)
+				.orderBy(mth.moneyTransferHstSn.desc())
+				.offset(rownum).limit(pageable.getPageSize())
+				.fetch();
+			log.debug("\n	moneyHst size => "+moneyHst.size());
+		}else if (!payMeanCd.equals("00")){
+			log.debug("\n    팩토리33333 \n 결제수단 => {}", payMeanCd);
+			moneyHst = jpaQueryFactory.selectFrom(mth)
 					.leftJoin(mth.buyHst, buyHst)
 					.fetchJoin()
 					.leftJoin(buyHst.goods, goods)
@@ -132,36 +151,17 @@ public class QuerydslRepositoryImpl implements QuerydslRepositoryCustom{
 					.where(
 							mth.member.membSn.eq(membSn)
 						.and(
+							mth.payMeanCd.eq(payMeanCd)
+						)
+						.and(
 							mth.frstRegistDt.between(startRes, endRes)
 						)
 					)
 					.orderBy(mth.moneyTransferHstSn.desc())
 					.offset(rownum).limit(pageable.getPageSize())
 					.fetch();
-				System.out.println("moneyHst => "+moneyHst.toString());
-			}else if (!payMeanCd.equals("00")){
-				log.debug("\n    팩토리33333 \n 결제수단 => {}", payMeanCd);
-				moneyHst = jpaQueryFactory.selectFrom(mth)
-						.leftJoin(mth.buyHst, buyHst)
-						.fetchJoin()
-						.leftJoin(buyHst.goods, goods)
-						.fetchJoin()
-						.leftJoin(goods.merchant, merchant)
-						.fetchJoin()
-						.where(
-								mth.member.membSn.eq(membSn)
-							.and(
-								mth.payMeanCd.eq(payMeanCd)
-							)
-							.and(
-								mth.frstRegistDt.between(startRes, endRes)
-							)
-						)
-						.orderBy(mth.moneyTransferHstSn.desc())
-						.offset(rownum).limit(pageable.getPageSize())
-						.fetch();
-				System.out.println("moneyHst => "+moneyHst.toString());
-			} 
+			log.debug("\n	moneyHst size => "+moneyHst.size());
+		} 
 		List<MoneyTransferHstDTO> moneyHstDto = moneyHst.stream()
 										.map(MoneyTransferHstDTO::toDto).collect(Collectors.toList());
 		int count = 0;
@@ -172,7 +172,7 @@ public class QuerydslRepositoryImpl implements QuerydslRepositoryCustom{
 										.and(mth.frstRegistDt.between(startRes, endRes))
 									)
 								.fetch().size();
-				log.debug("\n 팩토리22222 count => {}",count);
+				log.debug("\n	팩토리22222 count => {}",count);
 		} else if (!payMeanCd.equals("00")) {
 				count = jpaQueryFactory.selectFrom(mth)
 								.where(
@@ -183,9 +183,8 @@ public class QuerydslRepositoryImpl implements QuerydslRepositoryCustom{
 									.and(mth.frstRegistDt.between(startRes, endRes))
 								)
 								.fetch().size();
-				log.debug("\n 팩토리33333 count => {}",count);
+				log.debug("\n	팩토리33333 count => {}",count);
 		}
-		log.debug("QueryDSL :: count=>{}",count);
 		return new PageImpl<>(moneyHstDto, pageable, count);
 	}
 

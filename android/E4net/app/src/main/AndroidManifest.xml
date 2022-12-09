@@ -4,7 +4,6 @@
     <!-- 인터넷 권한 설정 -->
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!-- usesCleartextTraffic="true"  :  일반 http 사이트를 접근하기 위한 설정 -->
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -16,6 +15,21 @@
         android:theme="@style/Theme.E4net"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <service
+            android:name=".FcmService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <activity
+            android:name=".FcmWebviewActivity"
+            android:exported="true">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".IamportActivity"
             android:exported="true">

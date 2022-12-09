@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<input id="text" type="text"></input>
+	<button onclick="savetext()">푸쉬알람 내용 저장</button>
+	<button onclick="gettext()">푸쉬알람 보내기</button>
+	<button onclick="saveon()">푸쉬알람 on</button>
+	<button onclick="saveoff()">푸쉬알람 off</button>
+
+	<script>
+		startfunc();
+		function savetext() {
+			var a = document.getElementById('text').value;
+			android.savetext(a);
+		}
+
+		function gettext() {
+			android.gettext();
+		}
+
+		function saveon() {
+			android.saveon();
+		}
+
+		function saveoff() {
+			android.saveoff('web client msg');
+		}
+
+		function startfunc() {
+			android.startfunc('web client msg');
+		}
+	</script>
+
+</body>
+</html>

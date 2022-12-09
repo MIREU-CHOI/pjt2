@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>E4. fcmPage</title>
     <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 <body>
@@ -11,15 +11,13 @@
     <span> 토큰: </span><input name="token" value="" style="width: 80%"/> <br/>
     <span> 제목: </span><input name="title" value="title" style="width: 80%"/> <br/>
     <span> 내용: </span><input name="content" value="content" style="width: 80%"/> <br/>
-
-
   </form>
   <button onclick="sendPush()">푸시알림 보내기</button>
 
   <script>
     function sendPush(){
       $.ajax({
-        url : "/public/fcm/push",
+        url : "/android/fcm/push",
         method : "GET",
         data : $("#form").serialize(),
         success : function (data){
