@@ -29,6 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.e4net.demo.dto.BuyHstDTO;
 import net.e4net.demo.dto.ChangePasswordRequestDTO;
 import net.e4net.demo.dto.GoodsDTO;
+import net.e4net.demo.dto.MailDTO;
 import net.e4net.demo.dto.MemberDTO;
 import net.e4net.demo.dto.MemberRequestDTO;
 import net.e4net.demo.dto.MerchantDTO;
@@ -41,6 +42,7 @@ import net.e4net.demo.entity.MoneyTransferHst;
 import net.e4net.demo.repository.QuerydslRepositoryImpl;
 import net.e4net.demo.service.CertificationService;
 import net.e4net.demo.service.MemberService;
+import net.e4net.demo.service.SendEmailService;
 import retrofit2.http.GET;
 
 @RestController
@@ -52,14 +54,35 @@ public class MemberController {
 	private final MemberService memberService;
 	private final CertificationService certificationService;
 	private final QuerydslRepositoryImpl querydslRepositoryImpl;
+	private final SendEmailService sendEmailService;
 	
 	private static final int offset = 5;
+	
+	// =========== 비밀번호 찾기 ================= https://1-7171771.tistory.com/85
+	// membId와 emailAddr의 일치여부를 check하는 컨트롤러
+	@GetMapping("/member/findPwd")
+    public @ResponseBody Map<String, Boolean> findPwd(String membId, String emailAddr){
+		log.debug("MemberController :: \n	findPwd! membId {} , mobileNo {}", membId, emailAddr);
+        Map<String,Boolean> json = new HashMap<>();
+        boolean pwFindCheck = memberService.findPwd(membId, emailAddr);
+        log.debug("\n	pwFindCheck => {}", pwFindCheck);
+        json.put("check", pwFindCheck);
+        return json;
+    }
+	// 등록된 이메일로 임시비밀번호를 발송하고 발송된 임시비밀번호로 사용자의 pw를 변경하는 컨트롤러
+    @PostMapping("/member/findPwd/sendEmail")
+    public @ResponseBody void sendEmail(String userEmail, String userName){
+    	MailDTO dto = sendEmailService.createMailAndChangePassword(userEmail, userName);
+        sendEmailService.mailSend(dto);
+
+    }
+	
 	
 	// =========== 회원가입 시 아이디 중복 체크 =================
 	@GetMapping("/member/exists/{membId}")
 	public ResponseEntity<Boolean> checkMembIdDuplicate(@PathVariable("membId") String membId) {
 		System.out.println("membId => " + membId);
-		log.info("MemberController Layer :: Call checkMembIdDuplicate Method!");
+		log.debug("MemberController Layer :: Call checkMembIdDuplicate Method!");
 		if (memberService.checkMembIdDuplicate(membId)) {
 			return ResponseEntity.status(HttpStatus.OK).body(false);
 		}
@@ -70,7 +93,7 @@ public class MemberController {
 	@GetMapping("/android/member/exists/{membId}")
 	public ResponseEntity<Map<String, Boolean>> androidCheckMembIdDuplicate(@PathVariable("membId") String membId) {
 		System.out.println("membId => " + membId);
-		log.info("MemberController Layer :: Call checkMembIdDuplicate Method!");
+		log.debug("MemberController Layer :: Call checkMembIdDuplicate Method!");
 		Map<String, Boolean> map = new HashMap<String, Boolean>();  
 		if (memberService.checkMembIdDuplicate(membId)) {
 			map.put("res", false);
@@ -87,7 +110,7 @@ public class MemberController {
 	public ResponseEntity<String> sendSMS(@PathVariable("mobileNo") String mobileNo) {
 //        String cerNum = certificationService.certifiedPhoneNumber(mobileNo);
         String cerNum = "1004"; 	// 테스트 용 
-		log.info("수신자 번호 : {} 인증번호 : {}", mobileNo, cerNum);
+		log.debug("수신자 번호 : {} 인증번호 : {}", mobileNo, cerNum);
 		return ResponseEntity.status(HttpStatus.OK).body(cerNum);
 	}
 	
@@ -95,7 +118,7 @@ public class MemberController {
 	@PostMapping("/member/charge")
 	public ResponseEntity<MoneyTransferHstDTO> chargeMoney(@RequestBody MoneyTransferHstDTO transDto) {
 		Long membSn = transDto.getMember().getMembSn();
-		log.info("MemberController :: chargeMoney membSn:{}",membSn);
+		log.debug("MemberController :: chargeMoney membSn:{}",membSn);
 		Long amount = transDto.getTransferAmt();
 		MoneyTransferHst mth = memberService.insertMoneyTrans(transDto);
 		log.debug("머니거래이력번호 => {},  금액 => {}", mth.getMoneyTransferHstSn(), amount);
@@ -107,7 +130,7 @@ public class MemberController {
 	@GetMapping("/member/money/{membSn}")
 	public ResponseEntity<MoneyDTO> selectMoney(@PathVariable("membSn") Long membSn){
 //		log.debug("")
-		log.info("MemberController :: selectMoney membSn:{}",membSn);
+		log.debug("MemberController :: selectMoney membSn:{}",membSn);
 		MoneyDTO dto = memberService.selectMoney(membSn);
 		return ResponseEntity.status(HttpStatus.OK).body(dto);
 	}
@@ -115,21 +138,21 @@ public class MemberController {
 	// ============= 가맹점 조회 =============
 	@GetMapping("/member/merchants")
 	public ResponseEntity<List<MerchantDTO>> getAllMerchants(){
-		log.info("MemberController :: getAllMerchants");
+		log.debug("MemberController :: getAllMerchants");
 		List<MerchantDTO> dtoList = memberService.getAllMerchants();
 		return ResponseEntity.status(HttpStatus.OK).body(dtoList);
 	}
 	// 가맹점의 상품 조회 
 	@GetMapping("/member/merchants/{merchantSn}")
 	public ResponseEntity<List<GoodsDTO>> getMercGoods(@PathVariable("merchantSn") Long merchantSn){
-		log.info("MemberController :: getMercGoods sn=>{}", merchantSn);
+		log.debug("MemberController :: getMercGoods sn=>{}", merchantSn);
 		List<GoodsDTO> dtoList = memberService.getMercGoods(merchantSn);
 		return ResponseEntity.status(HttpStatus.OK).body(dtoList);
 	}
 	// 가맹점의 상품의 가격 조회 
 	@GetMapping("/member/goods/{goodsNo}")
 	public ResponseEntity<GoodsDTO> getGoodsAmt(@PathVariable("goodsNo") String goodsNo){
-		log.info("MemberController :: getMercGoods sn=>{}", goodsNo);
+		log.debug("MemberController :: getMercGoods sn=>{}", goodsNo);
 		GoodsDTO dtoList = memberService.getGoodsAmt(goodsNo);
 		return ResponseEntity.status(HttpStatus.OK).body(dtoList);
 	}
@@ -138,7 +161,7 @@ public class MemberController {
 	@PostMapping("/member/payMoney")
 	public ResponseEntity<MoneyTransferHst> payMoney(@RequestBody BuyHstDTO buyHstDto) {
 		Long membSn = buyHstDto.getMember().getMembSn(); 
-		log.info("MemberController :: payMoney membSn:{}",membSn);
+		log.debug("MemberController :: payMoney membSn:{}",membSn);
 //		System.out.println("BuyAmt => "+buyHstDto.getBuyAmt());
 		MoneyTransferHst mth = memberService.payMoney(buyHstDto);
 		return ResponseEntity.status(HttpStatus.OK).body(mth); // 머니거래이력 페이지로 가자! 
@@ -148,7 +171,7 @@ public class MemberController {
 	@PostMapping("/member/payCard")
 	public ResponseEntity<BuyHstDTO> payCard(@RequestBody BuyHstDTO buyHstDto) {
 		Long membSn = buyHstDto.getMember().getMembSn(); 
-		log.info("MemberController :: payCard membSn:{}",membSn);
+		log.debug("MemberController :: payCard membSn:{}",membSn);
 //		System.out.println("BuyAmt => "+buyHstDto.getBuyAmt());
 		BuyHstDTO dto = memberService.payCard(buyHstDto);
 		return ResponseEntity.status(HttpStatus.OK).body(dto); // 머니거래이력 페이지로 가자! 
@@ -160,7 +183,7 @@ public class MemberController {
 			@PathVariable("membSn") Long membSn, 
 			@PathVariable("rownum") int rownum,
 			@PageableDefault(page = 1, size = 10) Pageable page){
-		log.info("MemberController :: 전체 거래내역 sn=> {}",membSn);
+		log.debug("MemberController :: 전체 거래내역 sn=> {}",membSn);
 		Page<MoneyTransferHstDTO> list = memberService.getAllMembMoneyTransferHst(page,membSn,rownum);
 		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}

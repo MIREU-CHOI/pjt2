@@ -12,6 +12,7 @@ import History from './page/History';
 import Example from './Example';
 import List from './page/List';
 import Payment from './page/Payment';
+import FindPwd from './page/FindPwd';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/history" element={<History/>}/>
         <Route path="/list" element={<List />}/>
         <Route path="/payment" element={<Payment />}/>
+        <Route path="/findPwd" element={<FindPwd />}/>
 
       </Routes>
       {/* <Login /> */}

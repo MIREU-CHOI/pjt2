@@ -65,6 +65,18 @@ public class MemberService {
 	
 	private final ModelMapper modelMapper;
 	
+	// ============= 비밀번호 찾기 =============	https://1-7171771.tistory.com/85
+	public boolean findPwd(String membId, String emailAddr) {
+        Optional<Member> member = memberRepository.findByMembId(membId);
+        if(member != null && member.get().getEmailAddr().equals(emailAddr)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
+	
 	// ============ 전체 회원 조회 =============
 	public List<Member> findMembers() {
 		log.info("MemberService Layer :: Call findMembers Method!");

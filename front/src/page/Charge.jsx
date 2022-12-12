@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState, useNavigate } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import "../css/charge.css";
 import Table from 'react-bootstrap/Table';
 import Sidebar from "./Sidebar";
@@ -8,10 +8,11 @@ import { Button   } from 'react-bootstrap';
 import axios from 'axios';
 import SidebarMR from './SidebarMR';
 import SidebarMR2 from './SidebarMR2';
+import {  useNavigate } from 'react-router-dom';
 
 
 function Charge(props) {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const [memb, setMemb] = useState([]);
     const [money, setMoney] = useState("");     // 머니 "충전"액
     const [expMoney, setExpMoney] = useState(); // 충전"예정"결과액 
@@ -120,10 +121,8 @@ function Charge(props) {
                 })
             })
             .then((res) => {
-                // 서버 결제 API 성공시 로직
-                // alert('머니 충전 성공하였습니다.');
-                var returnVal = window.confirm('머니 충전 성공하였습니다.');
-                // corfirm 으로 바꿔서 해보기 !!!!!!!
+                var returnVal = window.confirm(money+'원 충전 완료되었습니다!');
+                callJsPay();   // push 알림도 보내자!
                 console.log('typeof(res) => ', typeof(res));
                 console.log('res => ', res);
                 console.log('res.data => ', res.data);
@@ -133,13 +132,36 @@ function Charge(props) {
                         'res.data.moneyTransferHstSn => ', res.data.moneyTransferHstSn);
                     setMoney("");
                     console.log('머니충전액 입력창 => ', money);
-                    // moneyUpdate();
                     console.log('=========== 머니 충전 성공하였습니다 ============');
+                    navigate("/history");
                 }
+            }).catch((error) => {
+                console.log(error);
             })
         } else {
             alert(`머니 충전 실패하였습니다. : ${error_msg}`);
         }
+    }
+    // ************** 결제 완료 시 푸시알림 보내는 axios 
+    const callJsPay = (e) => {
+        // let fcmToken = android.();
+        console.log('##########callJsPay##########');
+        let data = {
+            token : "cXPd3iPqRv2Xn03p6uIwPq:APA91bEnASvpAU7J7NhGDVNXdvjRhhKylEcCEIttSwUd_e_VX-YNvKxrD-R6kBs8fnH9qK4bKKx34pr9my3Wp3245DjTuN-xi89PV0Ng35XrjZLonHD8-AwjhYBXfCR6-iikFlxjYYOJ",
+            cate : 'charge',
+            money : money
+        }
+        console.log('typeof(data) =>', typeof(data));
+        console.log('data =>', data);
+        axios.post(global.ipAddress+":8888/android/fcm/push"
+            , data
+            , { headers: {"Content-Type": "application/json", }}
+        ).then(res => {
+            console.log('typeof(res) =>', typeof(res));
+            console.log('res.data => ',res.data);
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
 
@@ -171,9 +193,9 @@ function Charge(props) {
                 </tr>
                 <tr>
                     <td>머니충전액</td>
-                    <td>
+                    <td>    {/* style={{width:'150px'}}  */}
                         <input value={money} onChange={onMoneyHandler}
-                            type='number' className="charge"/>원
+                            type='number' className="charge" /> &nbsp;원
                     </td>
                 </tr>
                 <tr>

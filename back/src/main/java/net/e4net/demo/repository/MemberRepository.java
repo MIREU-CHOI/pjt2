@@ -31,6 +31,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 	
 	boolean existsByMobileNo(String mobileNo);
 	
+//	updateUserPassword
+	
 	
 	
 	

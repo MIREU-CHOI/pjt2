@@ -57,5 +57,6 @@ public class AuthService {
         membLoginHstRepository.save(MembLoginHst.createMembLoginHst(membSn, connectIp));
         return tokenProvider.generateTokenDto(authentication, member);
     }
+    
 
 }

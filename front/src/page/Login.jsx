@@ -25,6 +25,9 @@ function Login() {
     const signIn =() =>{
         navigate("/charge");
     }
+    const onFindPwd = () => {
+        navigate("/findPwd");
+    }
 
     const handleId = (e) => {
         setId(e.target.value);
@@ -178,6 +181,9 @@ function Login() {
             </div>
             <div>
                 <button onClick={register}  className="login_registerButton">회원가입</button>
+            </div>
+            <div>
+                <button onClick={onFindPwd}>비밀번호 찾기</button>
             </div>
         </div>
     )

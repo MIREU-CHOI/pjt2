@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "16865462704",
+    "project_id": "e4net-8a1bc",
+    "storage_bucket": "e4net-8a1bc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:16865462704:android:7c3c0784a60e11c3b9ae75",
+        "android_client_info": {
+          "package_name": "com.example.e4net"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "16865462704-q0vhmik1eu0m5qn7p2g76bkcmjfv93it.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpcotx5aUczBaueyEFvHQLecOupRu3HdQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "16865462704-q0vhmik1eu0m5qn7p2g76bkcmjfv93it.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

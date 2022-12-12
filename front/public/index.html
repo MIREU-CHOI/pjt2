@@ -64,10 +64,10 @@
     <script>
       const globalThis = this;
   
-      appFunction();
-      android.appFunction2();
-      function appFunction() {
-        let userData = android.appFunction();
+      reactFunction();
+      android.defaultFunction();
+      function reactFunction() {
+        let userData = android.appFunction(); // android.defaultFunction 과 같은데 toast 없는 버전 
         let userDataObject = JSON.parse(userData);
         sessionStorage.setItem('membSn', userDataObject.membSn);
         sessionStorage.setItem('membId', userDataObject.membId);

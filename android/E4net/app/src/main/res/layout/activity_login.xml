@@ -67,7 +67,7 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/btn_contained"
+                android:id="@+id/cb_loginSave"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"

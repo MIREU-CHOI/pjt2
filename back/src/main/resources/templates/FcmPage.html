@@ -9,13 +9,26 @@
 
   <form id="form">
     <span> 토큰: </span><input name="token" value="" style="width: 80%"/> <br/>
-    <span> 제목: </span><input name="title" value="title" style="width: 80%"/> <br/>
-    <span> 내용: </span><input name="content" value="content" style="width: 80%"/> <br/>
+    <span> 제목: </span><input id="title" name="title" value="title" style="width: 80%"/> <br/>
+    <span> 내용: </span><input id="content" name="content" value="content" style="width: 80%"/> <br/>
   </form>
   <button onclick="sendPush()">푸시알림 보내기</button>
 
-  <script>
-    function sendPush(){
+<script>
+//   function 
+  function sendPush(cate, money){
+	  console.log('JS sendPush cate =>', cate);
+	  if(cate == 'pay'){
+		  $('input[name=title]').attr('value', '결제 메세지');
+		  $('input[name=content]').attr('value', money+'원 결제 완료되었습니다!');
+		  console.log('pay title value => ', $('#title').val());
+		  console.log('pay content value => ', $('#content').val());
+	  }else if(cate == 'charge'){
+		  $('input[name=title]').attr('value', '충전 메세지');
+		  $('input[name=content]').attr('value', money+'원 충전 완료되었습니다!');
+		  console.log('charge title value => ', $('#title').val());
+		  console.log('charge content value => ', $('#content').val());
+	  }
       $.ajax({
         url : "/android/fcm/push",
         method : "GET",
@@ -27,7 +40,7 @@
           console.log(xhr);
         }
       })
-    }
-  </script>
+  }
+</script>
 </body>
 </html>

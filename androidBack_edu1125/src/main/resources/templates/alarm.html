@@ -14,6 +14,10 @@
 
 	<script>
 		startfunc();
+		function startfunc() {
+			android.startfunc('web client msg');
+		}
+// ------------------------------------------------
 		function savetext() {
 			var a = document.getElementById('text').value;
 			android.savetext(a);
@@ -31,9 +35,6 @@
 			android.saveoff('web client msg');
 		}
 
-		function startfunc() {
-			android.startfunc('web client msg');
-		}
 	</script>
 
 </body>

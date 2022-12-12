@@ -1,5 +1,7 @@
 plugins {
     id 'com.android.application'
+    // Add the Google services Gradle plugin
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -58,5 +60,9 @@ dependencies {
     implementation 'androidx.fragment:fragment:1.4.0-alpha01'
 
     implementation 'com.github.iamport:iamport-android:v1.3.6'
+
+    // for Drawable Navigation
+    implementation "androidx.drawerlayout:drawerlayout:1.1.1"
+//    implementation "com.google.android.material:material:1.4.0"
 
 }

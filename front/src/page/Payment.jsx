@@ -98,13 +98,13 @@ const Payment = (effect, deps) => {
     const onPay = (e) => {
         console.log('payMeanCd vvv => ', payMeanCd);
         if(payMeanCd == "03"){ // 선불머니 결제 - 미리 충전해놓은 것
-            console.log('머니 선택 - 03');
+            console.log('머니로 결제! - 03');
             onPayMoney();
         } else if (payMeanCd == "01") { // 카드 결제 - 카카오페이로 직접 결제 
-            console.log('카드 선택 - 01');
+            console.log('카드로 결제! - 01');
             onPayCard();
         } else if (payMeanCd == "02") { // 계좌이체 결제 
-            console.log('계좌이체 선택 - 02');
+            console.log('계좌이체로 결제! - 02');
         }
     }
 
@@ -121,17 +121,41 @@ const Payment = (effect, deps) => {
             },
             goodsAmt: goodsAmt,     // 결제금액
             // transferTyCd: '02',// 거래종류코드 (01:충전, 02:사용, 03:환전) <= 나중에 코드까지 buyHst에서 받아서 메서드 합쳐서 간결하게 만들어도 좋을 듯? 결제수단에 따른 if else...
+            
         }
         // axios.post("http://192.168.10.138:8888/member/payMoney", data, {
-        axios.post(global.ipAddress+":8888/member/payMoney", data, {
-        headers: {
-            "Content-Type": "application/json",
-        }
-        }).then(res => {
+        axios.post(global.ipAddress+":8888/member/payMoney" 
+            , data, { headers: { "Content-Type": "application/json", }}
+        ).then(res => {
             // console.log('typeof(res) =>', typeof(res));
             console.log('res.data => ',res.data);
-            window.confirm('결제 성공하였습니다.');
+            // if(window.android !== undefined) {
+            console.log('window.android => ',window.android);
+            window.confirm(goodsAmt+'원 결제 완료되었습니다!'); // alert 로도 알려주고 
+            callJsPay();   // push 알림도 보내자!
+            // }
             navigate("/history");
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+    // ************** 결제 완료 시 푸시알림 보내는 axios 
+    const callJsPay = (e) => {
+        // let fcmToken = android.();
+        console.log('##########callJsPay##########');
+        let data = {
+            token : "cXPd3iPqRv2Xn03p6uIwPq:APA91bEnASvpAU7J7NhGDVNXdvjRhhKylEcCEIttSwUd_e_VX-YNvKxrD-R6kBs8fnH9qK4bKKx34pr9my3Wp3245DjTuN-xi89PV0Ng35XrjZLonHD8-AwjhYBXfCR6-iikFlxjYYOJ",
+            cate : 'pay',
+            money : goodsAmt
+        }
+        console.log('typeof(data) =>', typeof(data));
+        console.log('data =>', data);
+        axios.post(global.ipAddress+":8888/android/fcm/push"
+            , data
+            , { headers: {"Content-Type": "application/json", }}
+        ).then(res => {
+            console.log('typeof(res) =>', typeof(res));
+            console.log('res.data => ',res.data);
         }).catch((error) => {
             console.log(error);
         })
@@ -177,7 +201,8 @@ const Payment = (effect, deps) => {
                 }
             }).then((rsp) => {
                 console.log('결제 rsp =>', rsp.data);
-                window.confirm('결제 성공하였습니다.');
+                window.confirm(goodsAmt+'원 결제 완료되었습니다.'); // alert 로도 알려주고 
+                callJsPay();   // push 알림도 보내자!
                 navigate("/history");
             }).catch((error) => {
                 console.log(error);

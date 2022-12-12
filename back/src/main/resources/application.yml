@@ -29,10 +29,21 @@ spring:
       ddl-auto: update
 #      ddl-auto: create-drop
     show-sql: true
+    
+# smtp
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: alfmsp123@gmail.com
+    password: google192837!
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.ssl.enable: true
 #  jackson:
 #    serialization:
 #      fail-on-empty-beans: false
 #spring.jackson.serialization.fail-on-empty-beans=false
+
 
 jwt:
   secret: few4f5e4w8f94a1f2s1d23f1e54fwe98f7a8f4s65fs1f3ewaf1f4a5ew4f65a1g5aw48t6aw46g8baw465bg4wa56

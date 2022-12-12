@@ -1,16 +1,17 @@
 package net.e4net.demo.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.e4net.demo.dto.MemberDTO;
 import net.e4net.demo.dto.MemberDTO;
 import net.e4net.demo.dto.TokenDTO;
 import net.e4net.demo.service.AuthService;
@@ -34,6 +35,10 @@ public class AuthController {
     	log.debug("AuthController :: login! id: {} pwd: {} ", requestDto.getMembId(), requestDto.getMembPwd());
         return ResponseEntity.ok(authService.login(requestDto, request.getRemoteAddr()));
     }
+    
+    
+    
+    
 }
 
 

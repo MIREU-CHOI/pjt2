@@ -6,6 +6,9 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,7 @@ import java.io.IOException;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class FcmService {
 
 
@@ -35,12 +39,24 @@ public class FcmService {
         }
     }
 
-    //push알림 보내는 service 함수
+    // push알림 보내는 service 함수 <= 이 잡채가 안드로이드에 푸시알림을 보내는 행위!!!
     public String sendPush(Map<String,Object> param){
+    	log.debug("\n	FcmService :: param => {}", param.toString());
+    	String title = "";
+    	String cont = "";
+    	String money = param.get("money").toString();
+    	if ((param.get("cate").toString()).equals("pay")){
+    		title = "결제 메세지";
+    		cont = money+"원 결제 완료되었습니다!";
+    		log.debug("\n	FcmService :: cont => {}",cont);
+  	  	} else if ((param.get("cate").toString()).equals("charge")){
+    		title = "충전 메세지";
+    		cont = money+"원 충전 완료되었습니다!";
+  	  	}
         Message message = Message.builder()
-                .putData("title", (String) param.get("title"))
-                .putData("content", (String) param.get("content"))
-                .setToken((String)param.get("token"))
+                .putData("title", title)
+                .putData("content", cont)
+                .setToken((String)param.get("token")) // 리액트 axois로 보낸 토큰을 set해주면 됨! 
                 .build();
         try {
             return  FirebaseMessaging.getInstance().send(message);
