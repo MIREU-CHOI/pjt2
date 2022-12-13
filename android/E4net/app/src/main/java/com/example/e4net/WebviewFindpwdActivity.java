@@ -76,7 +76,7 @@ public class WebviewFindpwdActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setLoadWithOverviewMode(true);
 
-//        wv_findpwd.addJavascriptInterface(new JsInterface(this, wv_findpwd), "android");
+        wv_findpwd.addJavascriptInterface(new JsInterface(this, wv_findpwd), "android");
         wv_findpwd.loadUrl(StaticFinalLabelsClass.SERVER_IP_ADDRESS+"/android/findPwd2");
 
 

@@ -19,6 +19,8 @@ import FindPwd2 from './page/FindPwd2';
 function App() {
   let ipAddress = "http://192.168.10.138";
   global.ipAddress = ipAddress;
+  let appToken = "dZIDu3WPRsiU4Ec3fzU2xg:APA91bHn5jR_AIOb5GhfaOb3bdZBYn_QT4aoOxtb65ltzYj8hNi7hc36_CKDBFMk-EwKQFOQ7eC_0R33cWHNnfUnCGe1jUBIC2iHFo4YvLDXUdt7KZNLjlAg98RdOXxNOfaqOg5GqgSN";
+  global.appToken = appToken;
 
   return (
     <div className="App">

@@ -28,7 +28,7 @@ function Charge(props) {
     // }
 
     useEffect(() => {
-        alert("login start")
+        // alert("login start")
         setExpMoney(memb.moneyBlce + parseInt(money));
     }, [money]);
 
@@ -147,7 +147,7 @@ function Charge(props) {
         // let fcmToken = android.();
         console.log('##########callJsPay##########');
         let data = {
-            token : "cXPd3iPqRv2Xn03p6uIwPq:APA91bEnASvpAU7J7NhGDVNXdvjRhhKylEcCEIttSwUd_e_VX-YNvKxrD-R6kBs8fnH9qK4bKKx34pr9my3Wp3245DjTuN-xi89PV0Ng35XrjZLonHD8-AwjhYBXfCR6-iikFlxjYYOJ",
+            token : global.appToken,
             cate : 'charge',
             money : money
         }

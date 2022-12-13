@@ -34,8 +34,8 @@ spring:
   mail:
     host: smtp.naver.com
     port: 465           # ssl 일때는 587 , tls 일 때는 465
-    username: 
-    password: 
+    username: alfmsp123@naver.com
+    password: naver192837!!
     properties:
       mail.smtp.auth: true
 #      mail.smtp.starttls.enable: true

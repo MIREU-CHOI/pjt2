@@ -5,6 +5,7 @@ import static android.content.Context.MODE_PRIVATE;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
@@ -31,6 +32,12 @@ public class JsInterface {
         this.editor = sharedPreferences.edit();
 //        this.NOTI_CHANNEL_ID = NOTI_CHANNEL_ID;
     }
+
+//    public JsInterface(Activity activity, WebView view){
+//        this.activity = activity;
+//        this.webView = view;
+//    }
+
     @JavascriptInterface
     public String appFunction() {
         String data = sharedPreferences.getString("data", "default");
@@ -49,6 +56,12 @@ public class JsInterface {
 //                webView.loadUrl("javascript:jsFunction('app msg')");
 //            }
 //        });
+    }
+
+    @JavascriptInterface
+    public void callLoginActivity() {
+        Intent intent = new Intent(activity, LoginActivity.class);
+        activity.startActivity(intent);
     }
 
 
