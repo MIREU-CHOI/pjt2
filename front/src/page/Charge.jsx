@@ -28,6 +28,7 @@ function Charge(props) {
     // }
 
     useEffect(() => {
+        alert("login start")
         setExpMoney(memb.moneyBlce + parseInt(money));
     }, [money]);
 
