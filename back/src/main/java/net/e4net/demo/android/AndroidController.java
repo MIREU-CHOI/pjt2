@@ -57,5 +57,12 @@ public class AndroidController {
 		return map;
 	}
 	
+	/* 비밀번호 찾기 */
+	@GetMapping("/android/findPwd2")
+	public String goFindPwd2() {
+		log.debug("\n	Android 비번 찾자 !");
+		return "findPwd2";
+	}
+	
 	
 }

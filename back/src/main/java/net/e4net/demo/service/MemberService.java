@@ -67,11 +67,14 @@ public class MemberService {
 	
 	// ============= 비밀번호 찾기 =============	https://1-7171771.tistory.com/85
 	public boolean findPwd(String membId, String emailAddr) {
+		log.debug("MemberService :: Call findPwd Method!");
         Optional<Member> member = memberRepository.findByMembId(membId);
         if(member != null && member.get().getEmailAddr().equals(emailAddr)) {
+    		log.debug("\n	아이디랑 이메일 같다!");
             return true;
         }
         else {
+    		log.debug("\n	아이디랑 이메일 다르다!");
             return false;
         }
     }
@@ -79,13 +82,13 @@ public class MemberService {
 	
 	// ============ 전체 회원 조회 =============
 	public List<Member> findMembers() {
-		log.info("MemberService Layer :: Call findMembers Method!");
+		log.debug("MemberService Layer :: Call findMembers Method!");
 		return memberRepository.findAll();
 	}
 	
 	// ============= 머니 충전 =============
 	public MoneyTransferHst insertMoneyTrans(MoneyTransferHstDTO dto) {
-		log.info("MemberService :: Call insertMoneyTrans Method!");
+		log.debug("MemberService :: Call insertMoneyTrans Method!");
 		Long membSn = dto.getMember().getMembSn();
 		Member member = Member.builder()
 							  .membSn(membSn)
@@ -99,7 +102,7 @@ public class MemberService {
 	// 머니 충전 시 회원머니 테이블 업데이트 
 //	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public Money updateMoney(Long membSn, Long amount){	// 서비스 내의 메서드 안으로 불러서 써도 괜찮다!! 한 트랜잭션 처리
-		log.info("MemberService :: Call updateMoney Method!");
+		log.debug("MemberService :: Call updateMoney Method!");
 		Money money = moneyRepository.findByMoneySn(membSn);
 		Long balance = money.getMoneyBlce(); // 기존 잔고
 		log.debug("기존 잔고 => {}", balance);
@@ -118,7 +121,7 @@ public class MemberService {
 	// * 서비스는 컨트롤러에서 dto 를 받아오고 entity 변환해서 디비 처리한 후
 	//   처리한 결과에 따라 다시 dto로 변환해서 컨트롤러에게 dto로 주면 된다!
 	public MoneyDTO selectMoney(Long moneySn) {
-		log.info("MemberService :: selectMoney sn=>{}",moneySn);
+		log.debug("MemberService :: selectMoney sn=>{}",moneySn);
 		Money money = moneyRepository.findByMoneySn(moneySn);
 //		System.out.println("MoneyBlce => "+ money.getMoneyBlce());
 //		modelMapper.getConfiguration().setAmbiguityIgnored(true);	// 이건 setter를 건너뛰는데
@@ -129,7 +132,7 @@ public class MemberService {
 	
 	// ============= 가맹점 조회 =============
 	public List<MerchantDTO> getAllMerchants(){
-		log.info("MemberService :: getAllMerchants");
+		log.debug("MemberService :: getAllMerchants");
 		Type listType = new TypeToken<List<MerchantDTO>>(){}.getType();
 		List<Merchant> mercList = merchantRepository.findAll();
 		List<MerchantDTO> dtoList = modelMapper.map(mercList, listType);
@@ -138,7 +141,7 @@ public class MemberService {
 	}
 	// 가맹점의 상품 조회
 	public List<GoodsDTO> getMercGoods(Long merchantSn){
-		log.info("MemberService :: getMercGoods sn=>{}",merchantSn);
+		log.debug("MemberService :: getMercGoods sn=>{}",merchantSn);
 		Type listType = new TypeToken<List<GoodsDTO>>(){}.getType();
 //		List<Goods> enList = goodsRepository.findAll();
 		List<Goods> goods = goodsRepository.findByMerchantMerchantSn(merchantSn);
@@ -152,7 +155,7 @@ public class MemberService {
 	}
 	// 가맹점의 상품의 가격 조회 
 	public GoodsDTO getGoodsAmt(String goodsNo) {
-		log.info("MemberService :: getGoodsAmt sn=>{}",goodsNo);
+		log.debug("MemberService :: getGoodsAmt sn=>{}",goodsNo);
 		Goods goods = goodsRepository.findByGoodsNo(goodsNo);
 //		System.out.println("MoneyBlce => "+ money.getMoneyBlce());
 //		modelMapper.getConfiguration().setAmbiguityIgnored(true);	// 이건 setter를 건너뛰는데

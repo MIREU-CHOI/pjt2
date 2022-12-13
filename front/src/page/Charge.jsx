@@ -109,7 +109,6 @@ function Charge(props) {
                 url: global.ipAddress+":8888/member/charge",
                 // url: "http://192.168.35.117:8888/member/charge",
                 method: "post",
-                method: "post",
                 headers: { "Content-Type": "application/json" },
                 data: JSON.stringify({
                     transferTyCd: '01',     // 거래종류코드 (01:충전, 02:사용, 03:환전)

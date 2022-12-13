@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>E4. 비밀번호 찾기</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+</head>
+<body>
+<div class="container">
+    <!-- Modal -->
+    <div class="mod" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="padding:35px 50px;">
+                    <h4><span class="glyphicon glyphicon-lock"></span> 비밀번호 찾기</h4>
+                </div>
+                <div class="modal-body" style="padding:40px 50px;">
+                    <div style="color: #ac2925; margin-bottom: 10px;">
+                        <center>입력된 정보로 임시 비밀번호가 전송됩니다.</center>
+                    </div>
+                    <hr>
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="userEmail">email</label>
+                            <input name="userId" id="userId" type="text" class="form-control" 
+                            	placeholder="가입시 등록한 아이디를 입력하세요.">
+                        </div>
+                        <div class="form-group">
+                            <label for="userName">name</label>
+                            <input name="userEmail" id="userEmail" type="text" class="form-control" 
+                            	placeholder="가입시 등록한 이메일을 입력하세요.">
+                        </div>
+                        <button type="button" class="btn btn-success btn-block" id="checkEmail">
+                        	OK
+                        </button>
+                        <button type="button" class="btn btn-success btn-block" id="checkEmail">
+                        	Cancel
+                        </button>
+                    </form>
+                    <hr>
+                    <div class="text-center small mt-2" id="checkMsg" style="color: red"></div>
+                </div>
+<!--                 <div class="modal-footer"> -->
+<!--                     <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span -->
+<!--                             class="glyphicon glyphicon-remove"></span> Cancel -->
+<!--                     </button> -->
+<!--                 </div> -->
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+//     $('.modal').on('hidden.bs.modal', function (e) {
+//         console.log('modal close');
+//         $(this).find('form')[0].reset()
+//     });
+
+    $("#checkEmail").click(function () {
+        let userEmail = $("#userEmail").val();
+        let userId = $("#userId").val();
+        console.log(`userId => ${userId} \n userEmail => ${userEmail}`);
+
+        $.ajax({
+        	contentType: 'application/json',
+            type: "GET",
+            url: "/member/findPwd/"+userId+"/"+userEmail,
+//             data: {
+//                 "userId": userId,
+//                 "userEmail": userEmail,
+//             },
+            success: function (res) {
+            	console.log("typeof(res) =>", typeof(res));
+            	console.log("res => ", res);
+            	console.log("res.check => ", res.check);
+                if (res.check) {
+                  $(document).ready(function() {
+                	Swal.fire({
+                        icon: "success",
+                        title: '발송 완료!',
+                        text: '입력하신 이메일로 임시비밀번호가 발송되었습니다.',
+                        showCancelButton: true,
+                        confirmButtonText: "확인",
+                    })
+//                     swal("발송 완료!", "입력하신 이메일로 임시비밀번호가 발송되었습니다.", "success"
+//                     	)
+                    	.then((OK) => {
+	                        if(OK) {
+	                            $.ajax({
+	                                type: "POST",
+	                                url: "/android/findPwd/sendEmail",
+	                                data: {
+	                                    "membId": userId,
+	                                    "emailAddr": userEmail,
+	                                }
+	                            })
+	                            window.location = "/";
+	                        }
+                  		})
+                    $('#checkMsg').html('<p style="color:darkblue"></p>');
+                  })
+                } else {
+                    $('#checkMsg').html('<p style="color:red">일치하는 정보가 없습니다.</p>');
+                }
+            }
+        })
+    })
+</script>
+</body>
+</html>

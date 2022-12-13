@@ -1,0 +1,34 @@
+input[name=search_id_name], input[name=search_id_email],
+input[name=search_pw_id], input[name=search_pw_email] { 
+    width : 50% 
+}
+
+input[name=search_id_write_email], 
+input[name=search_pw_write_email] { 
+    margin-left: 5px; 
+    padding: 5px;
+    width: 60%;
+}
+
+input[name=search_id_submit],
+input[name=search_pw_submit] {
+    border: solid 1px #ababab;
+    border-radius: 4px;
+    margin-left: 50px;
+    margin-top: 60px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.btns {
+    justify-content: center;
+    text-align: center;
+}
+.cancel, .ok{
+    margin: 5px;
+    width: 100px;
+}
+/* .ok {
+    margin: 5px;
+} */
+

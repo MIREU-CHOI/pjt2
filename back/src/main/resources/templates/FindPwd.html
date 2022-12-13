@@ -3,6 +3,7 @@
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
 </head>
 <body>
 <div class="container">
@@ -47,6 +48,7 @@
 
 
 <script>
+// function ready() {
     $('.modal').on('hidden.bs.modal', function (e) {
         console.log('modal close');
         $(this).find('form')[0].reset()
@@ -74,7 +76,7 @@
                                     "userEmail": userEmail,
                                     "userName": userName
                                 }
-                            })
+                            });
                             window.location = "/login";
                         }
                     }
@@ -84,8 +86,9 @@
                     $('#checkMsg').html('<p style="color:red">일치하는 정보가 없습니다.</p>');
                 }
             }
-        })
-    })
+        });
+    });
+// }
 </script>
 </body>
 </html>

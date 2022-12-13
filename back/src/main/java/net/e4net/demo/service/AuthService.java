@@ -47,7 +47,7 @@ public class AuthService {
     }
 
     public TokenDTO login(MemberDTO requestDto, String connectIp) {
-    	log.debug("AuthService :: login! id: {} pwd: {} ", requestDto.getMembId(), requestDto.getMembPwd());
+    	log.debug("AuthService :: login! \n	입력한 id: {} pwd: {} ", requestDto.getMembId(), requestDto.getMembPwd());
         UsernamePasswordAuthenticationToken authenticationToken = requestDto.toAuthentication();
         Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
         Optional<Member> member = memberRepository.findByMembId(requestDto.getMembId());

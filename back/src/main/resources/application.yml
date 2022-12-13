@@ -32,13 +32,14 @@ spring:
     
 # smtp
   mail:
-    host: smtp.gmail.com
-    port: 587
-    username: 
-    password: 
+    host: smtp.naver.com
+    port: 465           # ssl 일때는 587 , tls 일 때는 465
+    username: alfmsp123@naver.com
+    password: naver192837!!
     properties:
       mail.smtp.auth: true
-      mail.smtp.ssl.enable: true
+#      mail.smtp.starttls.enable: true
+      mail.smtp.ssl.enable: true     # ssl은 네이버 
 #  jackson:
 #    serialization:
 #      fail-on-empty-beans: false

@@ -28,11 +28,14 @@ public interface RetrofitService {
     @POST("/auth/login")
     Call<TokenDTO> login(@Body MembDTO membDTO);
 
+    // "비밀번호 찾기" 버튼
+//    Call<>
 
 
 
 
 
+// ========== 안드로이드 교육 ==========
     @GET("/public/sample/data")
     Call<Map<String, Object>> getSampleData(@Query("param") String param);
 }

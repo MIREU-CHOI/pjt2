@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 import "../css/findPwd.css";
@@ -114,7 +115,7 @@ class FindPwd extends Component {
 
     return (
 
-        <Modal></Modal>
+        // <Modal></Modal>
 
         // 
         <div>
@@ -137,7 +138,7 @@ class FindPwd extends Component {
                 </div>
 
                 <div>
-                  <input type='button' value='조회하기' name='search_pw_submit'/>
+                  <input type='button' value='조회하기' name='search_pw_submit' />
                 </div>
               </div>
 

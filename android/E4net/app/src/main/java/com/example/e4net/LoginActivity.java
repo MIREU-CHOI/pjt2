@@ -96,10 +96,10 @@ public class LoginActivity extends AppCompatActivity {
         tv_findPwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+                Intent intent = new Intent(LoginActivity.this, WebviewFindpwdActivity.class);
 //                intent.putExtra("msg", "from login");
-                Toast toast = Toast.makeText(getApplicationContext(), "비번 까먹었닝", Toast.LENGTH_SHORT);
-                toast.show();
+//                Toast toast = Toast.makeText(getApplicationContext(), "비번 까먹었닝", Toast.LENGTH_SHORT);
+//                toast.show();
                 startActivity(intent);
             }
         });

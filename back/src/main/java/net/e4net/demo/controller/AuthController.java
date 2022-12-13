@@ -32,7 +32,7 @@ public class AuthController {
 
     @PostMapping("/auth/login")
     public ResponseEntity<TokenDTO> login(@RequestBody MemberDTO requestDto, HttpServletRequest request) {
-    	log.debug("AuthController :: login! id: {} pwd: {} ", requestDto.getMembId(), requestDto.getMembPwd());
+    	log.debug("AuthController :: login! \n	입력한 id: {} pwd: {} ", requestDto.getMembId(), requestDto.getMembPwd());
         return ResponseEntity.ok(authService.login(requestDto, request.getRemoteAddr()));
     }
     

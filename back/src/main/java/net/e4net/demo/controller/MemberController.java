@@ -60,21 +60,35 @@ public class MemberController {
 	
 	// =========== 비밀번호 찾기 ================= https://1-7171771.tistory.com/85
 	// membId와 emailAddr의 일치여부를 check하는 컨트롤러
-	@GetMapping("/member/findPwd")
-    public @ResponseBody Map<String, Boolean> findPwd(String membId, String emailAddr){
-		log.debug("MemberController :: \n	findPwd! membId {} , mobileNo {}", membId, emailAddr);
+	@GetMapping("/member/findPwd/{userId}/{userEmail}")
+    public @ResponseBody Map<String, Boolean> findPwd(
+//    					String membId, String emailAddr
+    				@PathVariable("userId") String userId
+    				, @PathVariable("userEmail") String userEmail){
+		log.debug("MemberController :: \n	비번 찾자^~^ userId => {} , userEmail => {}", userId, userEmail);
         Map<String,Boolean> json = new HashMap<>();
-        boolean pwFindCheck = memberService.findPwd(membId, emailAddr);
+        boolean pwFindCheck = memberService.findPwd(userId, userEmail);
         log.debug("\n	pwFindCheck => {}", pwFindCheck);
         json.put("check", pwFindCheck);
         return json;
     }
 	// 등록된 이메일로 임시비밀번호를 발송하고 발송된 임시비밀번호로 사용자의 pw를 변경하는 컨트롤러
     @PostMapping("/member/findPwd/sendEmail")
-    public @ResponseBody void sendEmail(String userEmail, String userName){
-    	MailDTO dto = sendEmailService.createMailAndChangePassword(userEmail, userName);
-        sendEmailService.mailSend(dto);
-
+    public void sendEmail(@RequestBody MemberDTO dto){
+    	String membId = dto.getMembId();
+    	String emailAddr = dto.getEmailAddr();
+		log.debug("MemberController :: \n	메일 보내자^o^! membId => {} , emailAdder => {}", membId, emailAddr);
+    	MailDTO mailDto = sendEmailService.createMailAndChangePassword(dto);
+        sendEmailService.mailSend(mailDto);
+    }
+ // 등록된 이메일로 임시비밀번호를 발송하고 발송된 임시비밀번호로 사용자의 pw를 변경하는 컨트롤러
+    @PostMapping("/android/findPwd/sendEmail")
+    public void androidSendEmail( MemberDTO dto){
+    	String membId = dto.getMembId();
+    	String emailAddr = dto.getEmailAddr();
+		log.debug("androidSendEmail controll :: \n	메일 보내자^o^! membId => {} , emailAdder => {}", membId, emailAddr);
+    	MailDTO mailDto = sendEmailService.createMailAndChangePassword(dto);
+        sendEmailService.mailSend(mailDto);
     }
 	
 	

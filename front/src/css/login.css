@@ -102,3 +102,10 @@
   margin-bottom: 16px;
   cursor: pointer;
 }
+.findPwd {
+  float: right;
+  border: none;
+  background-color: #dadada;
+  color: white;
+  border-radius: 3em;
+}

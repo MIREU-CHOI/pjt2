@@ -13,6 +13,7 @@ import Example from './Example';
 import List from './page/List';
 import Payment from './page/Payment';
 import FindPwd from './page/FindPwd';
+import FindPwd2 from './page/FindPwd2';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         <Route path="/list" element={<List />}/>
         <Route path="/payment" element={<Payment />}/>
         <Route path="/findPwd" element={<FindPwd />}/>
+        <Route path="/FindPwd2" element={<FindPwd2 />}/>
 
       </Routes>
       {/* <Login /> */}
