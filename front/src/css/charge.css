@@ -26,6 +26,10 @@ button{
     /* width: 100px; */
 }
 
+.charge {
+    width: 135px;
+}
+
 @media (max-width: 1000px) {
     .charge_wrap {
         width: 100%;
@@ -69,5 +73,6 @@ button{
 
 .table {
     /* margin: 20px; */
+    margin-top: 50px;
 
 }

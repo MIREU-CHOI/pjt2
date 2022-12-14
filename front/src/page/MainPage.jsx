@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
+import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
@@ -24,6 +25,8 @@ import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import {  NavLink, Outlet } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 import '../css/mainPage.css';
+import { useState, useEffect } from 'react';
+import {  useNavigate } from 'react-router-dom';
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -106,12 +109,59 @@ const MainPage = () => {
     setOpen(false);
   };
 
+
+//////////////////////////////////////////////////////////////////////////////
+
+  
+  const navigate = useNavigate();
+
   // 사이드바 메뉴
   const menus = [
     {name : "머니 충전", path: "/main/charge", icon: <MonetizationOnIcon /> },
     {name : "머니 결제", path: "/main/payment", icon: <PaymentIcon /> },
     {name : "거래 내역", path: "/main/history", icon: <ManageSearchIcon /> },
   ]
+  const changeLog = (e) => {
+    e.preventDefault();
+    let token = sessionStorage.getItem('accessToken');
+    if(token != null){
+      e.currentTarget.value = 'LOGOUT';
+      // e.currentTarget.setState({
+      //   text: "Logout",
+      // });
+    }else {
+      e.currentTarget.value = 'LOGIN';
+      // e.currentTarget.setState({
+      //   text: "Login",
+      // });
+    }
+  }
+  const [logState, setLogState ] = useState('LOGIN');
+  useEffect(() => {
+    let token = sessionStorage.getItem('accessToken');
+    if(token != null){
+      setLogState('LOGOUT');
+    }
+  })
+
+  const onLogout = (e) => {
+    let bool = window.confirm("로그아웃 하시겠습니까?");
+    if(bool == true){
+      sessionStorage.removeItem('membSn');
+      sessionStorage.removeItem('membId');
+      sessionStorage.removeItem('accessToken');
+      sessionStorage.removeItem('membCls');
+      navigate("/");
+    }
+  }
+
+
+
+  // changeText = () => {
+  //   this.setState({
+  //     text: "변경 성공!",
+  //   });
+  // };
 
 
 
@@ -137,9 +187,11 @@ const MainPage = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography variant="h6" noWrap component="div" sx={{flexGrow: 1}}>
             E4. Pay
           </Typography>
+          {/* <input type={'button'} value={logState} onClick={changeLog} color="inherit"/> */}
+          <Button color="inherit" onClick={onLogout}>Logout</Button>
         </Toolbar>
       </AppBar>
 {/* =================== 사이드 바 ======================== */}
@@ -179,9 +231,9 @@ const MainPage = () => {
             </ListItem>
           ))}
         </List>
-        <Divider />
+        {/* <Divider /> */}
         {/* --------------- 사이드 메뉴들2 ------------------ */}
-        <List>
+        {/* <List>
           {['All mail', 'Trash', 'Spam'].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
@@ -204,7 +256,7 @@ const MainPage = () => {
               </ListItemButton>
             </ListItem>
           ))}
-        </List>
+        </List> */}
       </Drawer>
       </div>
 {/* ===================================================== */}

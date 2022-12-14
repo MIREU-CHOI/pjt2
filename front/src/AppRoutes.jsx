@@ -4,8 +4,9 @@ import Charge from './page/Charge';
 import History from './page/History';
 import Join2 from './page/Join2';
 import Login from './page/Login';
-import MainPage from './page/MainPage';
 import Payment from './page/Payment';
+import MainPage from './page/MainPage';
+import MainPage3 from './page/MainPage3';
 
 const AppRoutes = () => {
   return (
@@ -18,6 +19,8 @@ const AppRoutes = () => {
             <Route path="payment" element={<Payment/>}/>
             <Route path="history" element={<History />}/>
         </Route>
+        {/*  */}
+        <Route path="/main3" element={<MainPage3 />} />
     </Routes>
   );
 };

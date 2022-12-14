@@ -295,12 +295,13 @@ const Payment = (effect, deps) => {
                     </tr>
                     </tbody>
                 </Table>
-                <div className='form-row float-right'>
+                <div className='form-row float-right' style={{textAlign:'center'}}>
                     {/* <Button variant="primary" type="submit" className='payBtn' >
                         결제하기
                     </Button> */}
                     {/* 미르 테스트 - 결제하기 버튼 */}
-                    <Button variant="primary" type="submit" className='payBtn' >
+                    <Button variant="primary" type="button" 
+                        className='btn_charge w-btn-outline w-btn-pink-outline' >
                         결제하기
                     </Button>
                 </div>

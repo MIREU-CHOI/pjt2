@@ -3,8 +3,9 @@
 }
 
 .MuiDrawer-paperAnchorLeft {
-    background-color: darksalmon;
-    color: #d34836;
+    background-color: #A13929;
+    color: white;
+    text-decoration-color: black;
 }
 
 .target_div {
@@ -24,4 +25,7 @@
     /* Drawer {
         display: none;
     } */
+}
+.MuiButtonBase-root {
+    width: 40px;
 }
