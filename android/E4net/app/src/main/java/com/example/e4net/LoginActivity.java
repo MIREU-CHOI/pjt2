@@ -51,6 +51,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+//        getSupportActionBar().hide();
+
         mContext = this;    // 필수
 
         et_loginId = findViewById(R.id.et_loginId);

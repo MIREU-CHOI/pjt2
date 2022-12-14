@@ -75,7 +75,7 @@ function Login() {
                 console.log('membId => ', sessionStorage.getItem("membId"));
                 window.confirm('환영합니다 ^o^  '+res.data.membId+' 님!');
                 // 확인을 누르든 취소를 누르든 페이지 넘어가게!
-                navigate("/charge"); 
+                navigate("/main/charge"); 
             }
         }).catch((error) => {
             console.log(error);

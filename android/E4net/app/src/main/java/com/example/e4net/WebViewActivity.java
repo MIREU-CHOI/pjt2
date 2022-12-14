@@ -36,6 +36,7 @@ public class WebViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        getSupportActionBar().hide();
         setContentView(R.layout.activity_web_view);
 
         sharedPreferences = getSharedPreferences("e4_default", MODE_PRIVATE);
@@ -98,7 +99,7 @@ public class WebViewActivity extends AppCompatActivity {
 
         // charge / payment / history
 //        webView.loadUrl("http://192.168.10.138:3000/charge");
-        webView.loadUrl(StaticFinalLabelsClass.WEB_IP_ADDRESS+"/charge");
+        webView.loadUrl(StaticFinalLabelsClass.WEB_IP_ADDRESS+"/main/charge");
 //        webView.loadUrl("http://192.168.10.138:8080/public/sample");
 
 

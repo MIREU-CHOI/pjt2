@@ -228,9 +228,7 @@ function History(props) {
 //////////////////////////////////////////////////////////////////////////////////////////////////
     return (
     <div className="history_box">
-        <div className="history_sidebar">
-            <Sidebar></Sidebar>
-        </div>
+            {/* <Sidebar></Sidebar> */}
     <div className="history_container">
         <div className="history_wrap">
         <Table className="table table-borderless table-sm">

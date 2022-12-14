@@ -14,6 +14,7 @@ import List from './page/List';
 import Payment from './page/Payment';
 import FindPwd from './page/FindPwd';
 import FindPwd2 from './page/FindPwd2';
+import AppRoutes from './AppRoutes';
 
 
 function App() {
@@ -24,7 +25,10 @@ function App() {
 
   return (
     <div className="App">
-      <Routes>
+
+      <AppRoutes />
+
+      {/* <Routes>
         <Route path="/" element={<Home />}/>
         <Route path="/join" element={<Join2/>}/>
         <Route path="/charge" element={<Charge/>}/>
@@ -35,7 +39,7 @@ function App() {
         <Route path="/findPwd" element={<FindPwd />}/>
         <Route path="/FindPwd2" element={<FindPwd2 />}/>
 
-      </Routes>
+      </Routes> */}
       {/* <Login /> */}
       {/* <Example></Example> */}
       <>

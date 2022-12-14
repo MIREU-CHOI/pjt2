@@ -1,0 +1,27 @@
+.MuiToolbar-root {
+    background-color: #d34836;
+}
+
+.MuiDrawer-paperAnchorLeft {
+    background-color: darksalmon;
+    color: #d34836;
+}
+
+.target_div {
+    background-color: whitesmoke;
+    border-radius: 2em;
+    /* margin: 10px 80px; */
+}
+
+.drawer {
+    /* background-color: #d34836; */
+}
+@media (max-width: 1000px) {
+    .target_div {
+        width: 100%;
+        /* width: calc(100% - 100px); */
+    }
+    /* Drawer {
+        display: none;
+    } */
+}

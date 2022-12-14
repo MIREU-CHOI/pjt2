@@ -47,7 +47,7 @@ public class JsInterface {
 
     @JavascriptInterface
     public void defaultFunction() {    // 이 함수로 사용
-        Toast.makeText(context, "user 정보 가져왔다!", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, "user 정보 가져왔다!", Toast.LENGTH_SHORT).show();
         String data = sharedPreferences.getString("data", "default");
         Log.d("[webview]", "onPageStarted, data => "+data);
 //        activity.runOnUiThread(new Runnable() {

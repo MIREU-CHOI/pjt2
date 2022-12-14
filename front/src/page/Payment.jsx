@@ -220,7 +220,7 @@ const Payment = (effect, deps) => {
         <>
         <div className="charge_box">
             <div className="charge_sidebar">
-                <Sidebar></Sidebar>
+                {/* <Sidebar></Sidebar> */}
             </div>
             <div className="charge_container">
                 <div className="charge_wrap">
