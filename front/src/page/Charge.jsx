@@ -203,7 +203,6 @@ function Charge(props) {
                 <tr>
                     <td>충전결과예정액</td>
                     {/* <td onChange={expMoneyHandler}>{expMoney} (원)</td> */}
-                    
                     {
                         expMoney === NaN
                         ? setExpMoney(0)

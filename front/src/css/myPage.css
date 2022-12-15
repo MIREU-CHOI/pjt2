@@ -1,0 +1,42 @@
+
+.w-btn-outline {
+    position: relative;
+    padding: 15px 30px;
+    border-radius: 15px;
+    font-family: "paybooc-Light", sans-serif;
+    /* box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); */
+    text-decoration: none;
+    /* font-weight: 600; */
+    transition: 0.25s;
+}
+.w-btn-outline:hover {
+    background-color: #d34836;
+    border: 3px solid #d34836;
+}
+.w-btn-outline:active {
+    background-color: #d34836;
+    border: 3px solid #d34836;
+}
+.clicked {
+    background-color: #d34836;
+}
+
+.w-btn-pink-outline {
+    border: 3px solid #d34836;
+    color: black;
+    background-color: white;
+    
+}
+.btn_upInfo {
+    margin-bottom: 15px;
+    /* background-color: ;
+    border-color: #f75c5c;
+    color: black; */
+}
+
+#currMembPwd, #confirmPassword {
+    width: 130px;
+}
+#email, #fullAddr {
+    font-size: 14px;
+}

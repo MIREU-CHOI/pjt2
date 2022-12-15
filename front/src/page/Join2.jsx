@@ -175,7 +175,7 @@ function Join2(props) {
             alert("휴대폰 번호 인증 확인을 해주세요");
             return;
         }
-        if(idChkVal == true || phoneChkVal == true){
+        if(idChkVal == true && phoneChkVal == true){
             console.log('idChkVal => ', idChkVal);
             console.log('phoneChkVal => ', phoneChkVal);
             console.log('val.membCls => ', val.membCls);
@@ -201,7 +201,7 @@ function Join2(props) {
         console.log('인증번호 전송 버튼 click!');
         console.log('Phone => '+val.mobileNo);
 
-        axios.get("http://localhost:8888/check/sendSMS/" + val.mobileNo,
+        axios.get("http://localhost:8888/check/sendSMS/"+val.mobileNo,
         {
         // headers: {
         //     "Content-Type": "application/json",

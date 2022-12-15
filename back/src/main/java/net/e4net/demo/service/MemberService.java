@@ -102,7 +102,7 @@ public class MemberService {
 	// 머니 충전 시 회원머니 테이블 업데이트 
 //	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public Money updateMoney(Long membSn, Long amount){	// 서비스 내의 메서드 안으로 불러서 써도 괜찮다!! 한 트랜잭션 처리
-		log.debug("MemberService :: Call updateMoney Method!");
+		log.debug("\nMemberService :: Call updateMoney Method!");
 		Money money = moneyRepository.findByMoneySn(membSn);
 		Long balance = money.getMoneyBlce(); // 기존 잔고
 		log.debug("기존 잔고 => {}", balance);
@@ -116,12 +116,28 @@ public class MemberService {
 		Money money2 = modelMapper.map(moneyDto, Money.class);
 		return moneyRepository.save(money2);
 	}
-	
-	// ============= 회원 머니 조회 =============
+	// ============= 회원 조회 221215 =============
+	public MemberDTO selectMember(Long membSn) {
+		Member member = memberRepository.findById(membSn).get();
+		log.debug("MemberService :: selectMember MembId=>{}",member.getMembId());
+		//modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT); // 이건 가장 일치하는 값을 찾도록 설정! 연결 타이트하게? 
+		MemberDTO dto = modelMapper.map(member, MemberDTO.class);
+		return dto;
+	}
+	// ============= 회원 pwd 수정 221215 =============
+	public MemberDTO updateMembPwd(MemberDTO memberDTO) {
+    	log.debug("\nMemberService :: updateMembPwd Method!");
+    	Member member = memberRepository.findById(memberDTO.getMembSn()).get();
+    	String pwd = passwordEncoder.encode(memberDTO.getMembPwd());
+    	member.setMembPwd(pwd);
+    	MemberDTO dto = modelMapper.map(member, MemberDTO.class);
+        return dto;
+    }
+	// ============= 회원 머니 조회 221115 =============
 	// * 서비스는 컨트롤러에서 dto 를 받아오고 entity 변환해서 디비 처리한 후
 	//   처리한 결과에 따라 다시 dto로 변환해서 컨트롤러에게 dto로 주면 된다!
 	public MoneyDTO selectMoney(Long moneySn) {
-		log.debug("MemberService :: selectMoney sn=>{}",moneySn);
+		log.debug("\nMemberService :: selectMoney sn=>{}",moneySn);
 		Money money = moneyRepository.findByMoneySn(moneySn);
 //		System.out.println("MoneyBlce => "+ money.getMoneyBlce());
 //		modelMapper.getConfiguration().setAmbiguityIgnored(true);	// 이건 setter를 건너뛰는데

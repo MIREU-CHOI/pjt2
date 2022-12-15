@@ -219,9 +219,6 @@ const Payment = (effect, deps) => {
     return (
         <>
         <div className="charge_box">
-            <div className="charge_sidebar">
-                {/* <Sidebar></Sidebar> */}
-            </div>
             <div className="charge_container">
                 <div className="charge_wrap">
                 {/* <form onSubmit={onPay}> */}
@@ -256,7 +253,6 @@ const Payment = (effect, deps) => {
                                 ))}
                             </select>
                         </td>
-
                     </tr>
                     <tr>
                         <td>구매물품</td>

@@ -22,6 +22,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import PaymentIcon from '@mui/icons-material/Payment';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {  NavLink, Outlet } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 import '../css/mainPage.css';
@@ -126,14 +127,8 @@ const MainPage = () => {
     let token = sessionStorage.getItem('accessToken');
     if(token != null){
       e.currentTarget.value = 'LOGOUT';
-      // e.currentTarget.setState({
-      //   text: "Logout",
-      // });
     }else {
       e.currentTarget.value = 'LOGIN';
-      // e.currentTarget.setState({
-      //   text: "Login",
-      // });
     }
   }
   const [logState, setLogState ] = useState('LOGIN');
@@ -151,17 +146,11 @@ const MainPage = () => {
       sessionStorage.removeItem('membId');
       sessionStorage.removeItem('accessToken');
       sessionStorage.removeItem('membCls');
-      navigate("/");
+      // navigate("/"); // 얘는 리액트 로그인 화면으로 넘어가서 안드로이드로 가도록!
+      window.android.callLoginActivity();
     }
   }
 
-
-
-  // changeText = () => {
-  //   this.setState({
-  //     text: "변경 성공!",
-  //   });
-  // };
 
 
 
@@ -210,6 +199,7 @@ const MainPage = () => {
               {/* <NavLink to={menu.path} > */}
               <ListItemButton
                 component={NavLink} to={menu.path}
+                onClick={handleDrawerClose}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
@@ -233,10 +223,12 @@ const MainPage = () => {
         </List>
         {/* <Divider /> */}
         {/* --------------- 사이드 메뉴들2 ------------------ */}
-        {/* <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
+        <List>
+          {/* {['All mail', 'Trash', 'Spam'].map((text, index) => ( */}
+          {['My Page'].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
+                component={NavLink} to={'mypage'} // mypage.jsx
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
@@ -250,13 +242,13 @@ const MainPage = () => {
                     justifyContent: 'center',
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {<AccountCircleIcon />}
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={'My Page'} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
           ))}
-        </List> */}
+        </List>
       </Drawer>
       </div>
 {/* ===================================================== */}

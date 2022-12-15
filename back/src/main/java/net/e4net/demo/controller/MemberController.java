@@ -128,6 +128,20 @@ public class MemberController {
 		return ResponseEntity.status(HttpStatus.OK).body(cerNum);
 	}
 	
+	// ============= 회원 조회 221215 =============
+	@GetMapping("/member/{membSn}")
+	public ResponseEntity<MemberDTO> selectMember(@PathVariable("membSn") Long membSn){
+//			log.debug("")
+		log.debug("\nMemberController :: selectMember\n	membSn => {}",membSn);
+		MemberDTO dto = memberService.selectMember(membSn);
+		return ResponseEntity.status(HttpStatus.OK).body(dto);
+	}
+	// ============= 회원 pwd 수정 221215 =============
+	@PostMapping("/member/update")
+    public ResponseEntity<MemberDTO> updateMembPwd(@RequestBody MemberDTO memberDTO) {
+		log.debug("\nMemberController :: updateMembPwd!\n	getMembPwd => {}",memberDTO.getMembPwd());
+        return ResponseEntity.ok(memberService.updateMembPwd(memberDTO));
+    }
 	// =========== 머니 충전 221115 ===========
 	@PostMapping("/member/charge")
 	public ResponseEntity<MoneyTransferHstDTO> chargeMoney(@RequestBody MoneyTransferHstDTO transDto) {
@@ -139,7 +153,6 @@ public class MemberController {
 		memberService.updateMoney(membSn, amount);
 		return ResponseEntity.status(HttpStatus.OK).body(transDto);
 	}
-	
 	// ============= 회원 머니 조회 =============
 	@GetMapping("/member/money/{membSn}")
 	public ResponseEntity<MoneyDTO> selectMoney(@PathVariable("membSn") Long membSn){

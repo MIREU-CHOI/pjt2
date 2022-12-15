@@ -7,6 +7,7 @@ import Login from './page/Login';
 import Payment from './page/Payment';
 import MainPage from './page/MainPage';
 import MainPage3 from './page/MainPage3';
+import MyPage from './page/MyPage';
 
 const AppRoutes = () => {
   return (
@@ -18,8 +19,11 @@ const AppRoutes = () => {
             <Route path="charge" element={<Charge/>}/>
             <Route path="payment" element={<Payment/>}/>
             <Route path="history" element={<History />}/>
+            {/* My Page 추가  */}
+            <Route path='mypage' element={<MyPage/> } />
         </Route>
-        {/*  */}
+
+        {/* 테스트 용 */}
         <Route path="/main3" element={<MainPage3 />} />
     </Routes>
   );
