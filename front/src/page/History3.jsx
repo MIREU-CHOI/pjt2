@@ -13,9 +13,13 @@ import moment, { now } from 'moment';
 // 선언하지 않아도, 디바이스 혹은 locale의 시간을 불러온다. 
 import 'moment/locale/ko';	// 대한민국
 import { Route, Routes } from 'react-router-dom';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { Rating } from 'primereact/rating';
+import { ProductService } from '../service/ProductService';
 
 // startDate endDate
-function History(props) {
+function History3(props) {
 
     const today = new Date();
     var nowTime = moment().format('YYYY-MM-DD');
@@ -223,44 +227,49 @@ function History(props) {
             })
         }
     }
+    const [products, setProducts] = useState([]);
+    // const productService = new ProductService();
+
+    
+    // useEffect(() => {
+    //     productService.getProductsSmall().then(data => setProducts(data));
+    // }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    // const statusTemplate = (rowData) => {
+    //     return <span className={`product-badge status-${(rowData.inventoryStatus ? rowData.inventoryStatus.toLowerCase() : '')}`}>{rowData.inventoryStatus}</span>;
+    // }
+
+    // const ratingTemplate = (rowData) => {
+    //     return <Rating value={rowData.rating} readOnly cancel={false} />
+    // }
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
     return (
-        <div className="history_wrap">
-        <Table responsive>
+        <>
+        <div className="card">
+            <DataTable value={products} header="Stack" responsiveLayout="stack" breakpoint="960px">
+                <Column field="code" header="Code" />
+                <Column field="name" header="Name" />
+                <Column field="category" header="Category" />
+                <Column field="quantity" header="Quantity" />
+                <Column field="inventoryStatus" header="Status" body="aa" />
+                <Column field="rating" header="Rating" body="nn" />
+            </DataTable>
+        </div>
+    {/* ========================================== */}
+        <div className="card">
+        <DataTable header="Stack" responsiveLayout="stack" breakpoint="960px">
             <tbody>
             <tr>
                 <td>거래기간</td>
                 <td>
-                    {/* <DatePicker 
-                    selected={startDate}
-                    onChange={date => setStartDate(date)}
-                    customInput={<ExampleCustomInput />}
-                    locale={ko}
-                    dateFormat="yyyy년 MM월 dd일"
-                    // selectsStart
-                    startDate={startDate}
-                    endDate={endDate}
-                    minDate={""}
-                    /> */}
                     <input type='date' name='startDate' id='startDate'
                         onChange={handleStartDate } value={startDate} // value={moment(this).format("YYYY-MM-DD")}
                     />
                 </td>
                 <td>~</td>
                 <td>
-                    {/* <DatePicker 
-                    selected={endDate}
-                    onChange={date => setEndDate(date)}
-                    customInput={<ExampleCustomInput />}
-                    locale={ko}
-                    dateFormat="yyyy년 MM월 dd일"
-                    // selectsEnd
-                    endDate={endDate}
-                    startDate={startDate}
-                    minDate={startDate}
-                    /> */}
                     <input type='date' name='endDate' id='endDate'
                         onChange={handleEndDate } value={endDate} 
                         min={startDate} 
@@ -277,17 +286,16 @@ function History(props) {
                 </td>
                 <td>
                     {/* ===== 버튼 ===== */}
-                    <button onClick={onSearch} type="button"
-                        className='btn btn-secondary' >
+                    <button onClick={onSearch} className='btn btn-secondary' >
                         조회
                     </button>
                 </td>
             </tr>
             </tbody>
-        </Table>
+        </DataTable >
 
         <div >
-        <Table responsive>
+        <DataTable header="Stack" responsiveLayout="stack" breakpoint="960px">
             <thead>
             <tr>
                 <th>일자</th>
@@ -302,7 +310,7 @@ function History(props) {
             <tbody>
                 <MoneyHstList hstList={hstList}/>
             </tbody>
-        </Table>
+        </DataTable >
         {/* <CallPage/> */}
         {
         // <Paging page={currentPage} count={count} setPage={setPage} 
@@ -317,9 +325,10 @@ function History(props) {
 
         
         </div>
+        </>
 
     );
 
 }
 
-export default History;
+export default History3;

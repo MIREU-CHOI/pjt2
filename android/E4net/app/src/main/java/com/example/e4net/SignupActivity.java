@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -127,11 +128,24 @@ public class SignupActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         if (response.isSuccessful()){
+                            String token = StaticFinalLabelsClass.APP_TOKEN;
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("token", token);
+                            Call<String> request_token = retrofitService.pushCerNum(map);
                             certNum = response.body();
-                            Log.d("[phoneChk]", "onResponse: 성공,\n결과"+ certNum);
-                            Toast toast = Toast.makeText(getApplicationContext(),
-                                    "인증번호가 전송되었습니다.", Toast.LENGTH_SHORT);
-                            toast.show();
+                            request_token.enqueue(new Callback<String>() {
+                                @Override
+                                public void onResponse(Call<String> call, Response<String> response) {
+                                    Log.d("[phoneChk]", "\n phoneChk 콜백!!! onResponse: 성공,\n결과"+ certNum);
+                                    Toast toast = Toast.makeText(getApplicationContext(),
+                                            "인증번호가 전송되었습니다.", Toast.LENGTH_SHORT);
+                                    toast.show();
+                                }
+                                @Override
+                                public void onFailure(Call<String> call, Throwable t) {
+                                    Log.d("[phoneChk]", "\n phoneChk 콜백!!! onFailure => "+t.getMessage());
+                                }
+                            });
                         } else {
                             Log.d("[phoneChk]", "onResponse: 실패, \n"+response.toString());
                         }
@@ -207,6 +221,9 @@ public class SignupActivity extends AppCompatActivity {
                             Toast toast = Toast.makeText(getApplicationContext(),
                                     "축하합니다! 가입이 완료되었습니다.", Toast.LENGTH_SHORT);
                             toast.show();
+                            Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                            intent.putExtra("msg", "from signUp");
+                            startActivity(intent);
                         } else {
                             Log.d("[signUp]", "onResponse: 실패, \n"+response.toString());
                         }
@@ -230,15 +247,15 @@ public class SignupActivity extends AppCompatActivity {
 
 
         // (임시 버튼) 로그인 페이지로 넘어가는 버튼
-        btn_goLogin = findViewById(R.id.btn_goLogin);
-        btn_goLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                intent.putExtra("msg2", "from signup");
-                startActivity(intent);
-            }
-        });
+//        btn_goLogin = findViewById(R.id.btn_goLogin);
+//        btn_goLogin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+//                intent.putExtra("msg2", "from signup");
+//                startActivity(intent);
+//            }
+//        });
     }
     // ================================================================
     // 우편번호 api 끝나고 실행되는 메소드 ?

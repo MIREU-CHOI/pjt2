@@ -134,7 +134,7 @@ const Payment = (effect, deps) => {
             window.confirm(goodsAmt+'원 결제 완료되었습니다!'); // alert 로도 알려주고 
             callJsPay();   // push 알림도 보내자!
             // }
-            navigate("/history");
+            navigate("/main/history");
         }).catch((error) => {
             console.log(error);
         })
@@ -168,7 +168,7 @@ const Payment = (effect, deps) => {
     // 가맹점 식별하기
     const onPayCard = (e) => {
         console.log('다날 로 결제하자!');
-        const data = {
+        let data = {
             pg: 'danal_tpay',           // PG사 (필수항목)
             pay_method: 'card',           // 결제수단 (필수항목)
             merchant_uid: `mid_${new Date().getTime()}`, // 결제금액 (필수항목)
@@ -182,12 +182,14 @@ const Payment = (effect, deps) => {
             buyer_postalcode: 12345,
             // m_redirect_url : 'http://192.168.10.138:3000/member/payCard'
         };
+        console.log('data => ',data);
         IMP.request_pay(data, callback);    
         // 원래 안드로이드 웹뷰에선 callback 실행 안되는데 다날로 하면 됨!
     }// >>>>>>> 콜백 
     const callback = (rsp) => {
+        console.log('rsp => ',rsp.data);
         const {success, error_msg, imp_uid, merchant_uid, pay_method, paid_amount, status} = rsp;
-        if (success) {
+        if (rsp.success) {
             // axios로 HTTP 요청
             axios({
                 // url: "http://192.168.10.138:8888/member/payCard",
@@ -201,9 +203,11 @@ const Payment = (effect, deps) => {
                 }
             }).then((rsp) => {
                 console.log('결제 rsp =>', rsp.data);
-                window.confirm(goodsAmt+'원 결제 완료되었습니다.'); // alert 로도 알려주고 
-                callJsPay();   // push 알림도 보내자!
-                navigate("/history");
+                let bool = window.confirm(goodsAmt+'원 결제 완료되었습니다.'); // alert 로도 알려주고 
+                if(bool){
+                    callJsPay();   // push 알림도 보내자!
+                    navigate("/main/history");
+                }
             }).catch((error) => {
                 console.log(error);
             })
@@ -222,13 +226,13 @@ const Payment = (effect, deps) => {
             <div className="charge_container">
                 <div className="charge_wrap">
                 {/* <form onSubmit={onPay}> */}
-                <Formik 
+                {/* <Formik 
                 initialValues={{
                     name: ''
                 }}
                 onSubmit={onPay}
-                >
-                <Form>
+                > */}
+                {/* <Form> */}
                 <Table striped>
                     <thead>
                     <tr>
@@ -292,18 +296,19 @@ const Payment = (effect, deps) => {
                     </tbody>
                 </Table>
                 <div className='form-row float-right' style={{textAlign:'center'}}>
-                    {/* <Button variant="primary" type="submit" className='payBtn' >
-                        결제하기
-                    </Button> */}
-                    {/* 미르 테스트 - 결제하기 버튼 */}
-                    <Button variant="primary" type="button" 
-                        className='btn_charge w-btn-outline w-btn-pink-outline' >
+                    <Button variant="primary" type="button" onClick={onPay}
+                        className='payBtn btn_charge w-btn-outline w-btn-pink-outline' >
                         결제하기
                     </Button>
+                    {/* 미르 테스트 - 결제하기 버튼 */}
+                    {/* <Button variant="primary" type="button" 
+                        className='btn_charge w-btn-outline w-btn-pink-outline' >
+                        결제하기
+                    </Button> */}
                 </div>
                 {/* </form> */}
-                </Form>
-            </Formik>
+                {/* </Form> */}
+            {/* </Formik> */}
                 </div>
             </div>
         </div>

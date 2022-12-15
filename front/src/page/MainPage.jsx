@@ -120,7 +120,9 @@ const MainPage = () => {
   const menus = [
     {name : "머니 충전", path: "/main/charge", icon: <MonetizationOnIcon /> },
     {name : "머니 결제", path: "/main/payment", icon: <PaymentIcon /> },
+    // {name : "거래 내역", path: "/main/history", icon: <ManageSearchIcon /> },
     {name : "거래 내역", path: "/main/history", icon: <ManageSearchIcon /> },
+    // {name : "거래 내역", path: "/main/history3", icon: <ManageSearchIcon /> },
   ]
   const changeLog = (e) => {
     e.preventDefault();

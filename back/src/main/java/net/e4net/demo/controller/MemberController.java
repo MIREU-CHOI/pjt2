@@ -123,7 +123,7 @@ public class MemberController {
 	@GetMapping("/check/sendSMS/{mobileNo}")
 	public ResponseEntity<String> sendSMS(@PathVariable("mobileNo") String mobileNo) {
 //        String cerNum = certificationService.certifiedPhoneNumber(mobileNo);
-        String cerNum = "1004"; 	// 테스트 용 
+        String cerNum = "7963"; 	// 테스트 용 
 		log.debug("수신자 번호 : {} 인증번호 : {}", mobileNo, cerNum);
 		return ResponseEntity.status(HttpStatus.OK).body(cerNum);
 	}

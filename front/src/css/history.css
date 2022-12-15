@@ -11,8 +11,8 @@
     /* margin-left:100px; */
 }
 .history_wrap {
-    display: flex;
-    flex-direction: column;
+    /* display: flex;
+    flex-direction: column; */
     /* width: 500px; */
 }
 
@@ -21,20 +21,20 @@
 }
 
 button{
-    width: 150px;
+    /* width: 150px; */
 }
 .history_table td{
-    border-style: none;
+    /* border-style: none; */
 }
 
 .datev {
     /* float: left; */
-    display: flex;
-    width: 30px;
+    /* display: flex;
+    width: 30px; */
 }
 
 .example-custom-input {
-    width: 150px;
+    /* width: 150px; */
     /* float: left; */
 }
 .table {
@@ -46,4 +46,19 @@ button{
         width: 100%;
         /* width: calc(100% - 100px); */
     }
+}
+Th {
+    font-weight: bolder;
+}
+.target_tr {
+    font-weight: bold;
+}
+#td-before text{
+    font-size: large;
+}
+.pivoted > div {
+    font-weight: bolder;
+}
+#endDate , #startDate, select {
+    width: 130px;
 }

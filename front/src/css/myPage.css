@@ -34,7 +34,7 @@
     color: black; */
 }
 
-#currMembPwd, #confirmPassword {
+#currMembPwd, #membPwd,#confirmPassword {
     width: 130px;
 }
 #email, #fullAddr {

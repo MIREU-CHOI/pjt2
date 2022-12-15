@@ -65,5 +65,31 @@ public class FcmService {
         }
         return "fail";
     }
+ // push알림 보내는 service 함수 
+    public String pushCerNum(Map<String,Object> param){
+    	log.debug("\n	FcmService :: param => {}", param.toString());
+    	String title = "E4. 휴대폰 인증번호";
+    	String cont = "E4. Pay 휴대폰 인증번호는 " + "[ 7963 ]" + "입니다.";
+//    	String money = param.get("money").toString();
+//    	if ((param.get("cate").toString()).equals("pay")){
+//    		title = "결제 메세지";
+//    		cont = money+"원 결제 완료되었습니다!";
+//    		log.debug("\n	FcmService :: cont => {}",cont);
+//  	  	} else if ((param.get("cate").toString()).equals("charge")){
+//    		title = "충전 메세지";
+//    		cont = money+"원 충전 완료되었습니다!";
+//  	  	}
+        Message message = Message.builder()
+                .putData("title", title)
+                .putData("content", cont)
+                .setToken((String)param.get("token")) // 리액트 axois로 보낸 토큰을 set해주면 됨! 
+                .build();
+        try {
+            return  FirebaseMessaging.getInstance().send(message);
+        } catch (FirebaseMessagingException e) {
+            e.printStackTrace();
+        }
+        return "fail";
+    }
 
 }

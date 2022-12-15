@@ -94,7 +94,7 @@ function Charge(props) {
         // setMerchantUid(data.merchant_uid);
         // console.log('data.merchant_uid => ' + data.merchant_uid);
         IMP.request_pay(data, callback);
-        // navigate("/history");
+        navigate("/main/history");
     }
 
     // 콜백 
@@ -142,7 +142,7 @@ function Charge(props) {
                     setMoney("");
                     console.log('머니충전액 입력창 => ', money);
                     console.log('=========== 머니 충전 성공하였습니다 ============');
-                    navigate("/history");
+                    navigate("/main/history");
                 }
             }).catch((error) => {
                 console.log(error);
@@ -178,47 +178,47 @@ function Charge(props) {
     return (
         <>
         {/* <MiniDrawer></MiniDrawer> */}
-            <div className="charge_wrap">
-            <Table striped>
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>금액</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>머니잔액</td>
-                    <td>
-                        <div>{memb.moneyBlce} (원)</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>머니충전액</td>
-                    <td>    {/* style={{width:'150px'}}  */}
-                        <input value={money} onChange={onMoneyHandler}
-                            type='number' className="charge" /> &nbsp;원
-                    </td>
-                </tr>
-                <tr>
-                    <td>충전결과예정액</td>
-                    {/* <td onChange={expMoneyHandler}>{expMoney} (원)</td> */}
-                    {
-                        expMoney === NaN
-                        ? setExpMoney(0)
-                        : <td>{expMoney} (원)</td>
-                    }
-                    {/* {expMoney}  */}
-                </tr>
-                </tbody>
-            </Table>
-            <div className='form-row ' style={{textAlign:'center'}} >
-            <Button onClick={onClickCharge} type="button" 
-                className='btn_charge w-btn-outline w-btn-pink-outline' >
-                충전하기
-            </Button>
-            </div>
-            </div>
+        <div className="charge_wrap">
+        <Table striped>
+            <thead>
+            <tr>
+                <th></th>
+                <th>금액</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>머니잔액</td>
+                <td>
+                    <div>{memb.moneyBlce} (원)</div>
+                </td>
+            </tr>
+            <tr>
+                <td>머니충전액</td>
+                <td>    {/* style={{width:'150px'}}  */}
+                    <input value={money} onChange={onMoneyHandler}
+                        type='number' className="charge" /> &nbsp;원
+                </td>
+            </tr>
+            <tr>
+                <td>충전결과예정액</td>
+                {/* <td onChange={expMoneyHandler}>{expMoney} (원)</td> */}
+                {
+                    expMoney === NaN
+                    ? setExpMoney(0)
+                    : <td>{expMoney} (원)</td>
+                }
+                {/* {expMoney}  */}
+            </tr>
+            </tbody>
+        </Table>
+        <div className='form-row ' style={{textAlign:'center'}} >
+        <Button onClick={onClickCharge} type="button" 
+            className='btn_charge w-btn-outline w-btn-pink-outline' >
+            충전하기
+        </Button>
+        </div>
+        </div>
     </>
     );
 

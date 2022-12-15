@@ -39,7 +39,7 @@ const MyPage = (props) => {
         }).catch((error) => {
             console.log(error);
         })
-    }, [test]);
+    }, []);
 
     const onUpdatePwd = (e) => {
         // if(currMembPwd != user.membPwd){
@@ -63,7 +63,9 @@ const MyPage = (props) => {
                     //     }
                     }).then((res) => {
                         console.log(res.data);
-                        
+                        alert('비밀번호 변경 완료되었습니다.');
+                        setMembPwd(() => "");
+                        setConfirmPassword(() => "");
                     }).catch((error) => {
                         console.log(error);
                 })
@@ -102,10 +104,10 @@ const MyPage = (props) => {
                   <td>{user !== undefined && user.membId}</td>
                 </tr>
                 <tr>
-                  <td>현재 비밀번호</td>
+                  <td>새 비밀번호</td>
                   <td>
-                    <input value={currMembPwd} id='currMembPwd' name='currMembPwd' 
-                        type='password' onChange={onCurrMembPwdHandler} />
+                    <input value={membPwd} id='membPwd' name='membPwd' 
+                        type='password' onChange={onMembPwdHandler} />
                   </td>
                 </tr>
                 <tr>
@@ -151,7 +153,7 @@ const MyPage = (props) => {
             </Table>
             <div style={{textAlign:'center'}}>
                 <Button 
-                    onClick={onUpdatePwd} type="submit"
+                    onClick={onUpdatePwd} type="button"
                     className='btn_upInfo w-btn-outline w-btn-pink-outline'>
                     수정
                 </Button> 

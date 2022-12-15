@@ -87,7 +87,7 @@
                         android:layout_marginRight="5dp"
                         android:ems="10"
                         android:hint="비밀번호 (*)"
-                        android:inputType="text"
+                        android:inputType="textPassword"
                         android:textSize="17dp" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -112,7 +112,7 @@
                         android:layout_marginRight="5dp"
                         android:ems="10"
                         android:hint="비밀번호 확인 (*)"
-                        android:inputType="text"
+                        android:inputType="textPassword"
                         android:textSize="17dp" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -348,15 +348,15 @@
                 android:text="가입하기"
                 android:backgroundTint="@color/colorGoogleSignIn"/>
 
-            <Button
-                android:id="@+id/btn_goLogin"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="45dp"
-                android:text="로그인하러 가자"
-                android:backgroundTint="@color/colorGoogleSignIn" />
+<!--            <Button-->
+<!--                android:id="@+id/btn_goLogin"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_marginTop="30dp"-->
+<!--                android:layout_marginBottom="45dp"-->
+<!--                android:text="로그인하러 가자"-->
+<!--                android:backgroundTint="@color/colorGoogleSignIn" />-->
             <!--
             <Button
                 android:layout_width="100dp"

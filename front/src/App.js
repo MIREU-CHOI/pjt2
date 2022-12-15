@@ -18,9 +18,11 @@ import AppRoutes from './AppRoutes';
 
 
 function App() {
-  let ipAddress = "http://192.168.10.138";
+  // let ipAddress = "http://192.168.10.138"; // company
+  let ipAddress = "http://192.168.35.117";  
   global.ipAddress = ipAddress;
-  let appToken = "dZIDu3WPRsiU4Ec3fzU2xg:APA91bHn5jR_AIOb5GhfaOb3bdZBYn_QT4aoOxtb65ltzYj8hNi7hc36_CKDBFMk-EwKQFOQ7eC_0R33cWHNnfUnCGe1jUBIC2iHFo4YvLDXUdt7KZNLjlAg98RdOXxNOfaqOg5GqgSN";
+  // let appToken = "dZIDu3WPRsiU4Ec3fzU2xg:APA91bHn5jR_AIOb5GhfaOb3bdZBYn_QT4aoOxtb65ltzYj8hNi7hc36_CKDBFMk-EwKQFOQ7eC_0R33cWHNnfUnCGe1jUBIC2iHFo4YvLDXUdt7KZNLjlAg98RdOXxNOfaqOg5GqgSN";
+  let appToken = "c3vqKUb6RcWAano01X3uO3:APA91bGr4Iu-dangFhvGLTDM0RpcjpOAvRgqsZk7RF4zmWuXbnHu1qI9My1-1JL9E2hd3HenWFeZo8-gntyCtnLwmdoNMfpOqHtfiUzU50gUwfzlUTwFHvaPCx6rClAUlcwNKSVSm0jG";
   global.appToken = appToken;
 
   return (

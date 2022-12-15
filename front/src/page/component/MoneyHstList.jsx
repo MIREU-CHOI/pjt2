@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
+import {Table, Thead, Tbody, Tr, Th, Td} from 'react-super-responsive-table';
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 
 const MoneyHstList = ({hstList}) => {
 
@@ -14,32 +16,32 @@ const MoneyHstList = ({hstList}) => {
         <>
         {
             hstList.map((hst, idx) => (
-                <tr key={idx}>
-                <td>{(hst.frstRegistDt).substring(0,10)}</td>
+                <Tr key={idx}>
+                <Td>{(hst.frstRegistDt).substring(0,10)}</Td>
                 {
                     hst.transferTyCd == "01" ?
-                    <td>충전</td>
+                    <Td>충전</Td>
                     : hst.transferTyCd == "02" ?
-                    <td>결제</td>
-                    : <td></td>
+                    <Td>결제</Td>
+                    : <Td></Td>
                     // : null
                 }
                 {
                     hst.payMeanCd == "01" ?
-                    <td>카드</td>
+                    <Td>카드</Td>
                     : hst.payMeanCd == "03" ?
-                    <td>머니사용</td>
-                    : <td></td>
+                    <Td>머니사용</Td>
+                    : <Td></Td>
                 }
-                <td>{hst.goodsNm}</td>
-                <td>{hst.merchantNm}</td>
-                <td>{hst.transferAmt} 원</td>
+                <Td>{hst.goodsNm}</Td>
+                <Td>{hst.merchantNm}</Td>
+                <Td>{hst.transferAmt} 원</Td>
                 {
                     hst.moneyTransferHstSn != null ?
-                    <td>정상</td>
-                    : <td>오류</td>
+                    <Td>정상</Td>
+                    : <Td>오류</Td>
                 }
-                </tr>
+                </Tr>
         ))} 
          </>
     );

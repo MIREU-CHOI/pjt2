@@ -211,8 +211,27 @@ function Join2(props) {
             console.log("typeof(res) => "+ typeof(res));
             console.log("res.data '인증번호 반환값' => "+ res.data);
             console.log("typeof(res.data) => "+ typeof(res.data));
-
             setResCerNum(res.data);
+            callJsCerNum();
+        })
+    }
+    // **************  푸시알림 보내는 axios 
+    const callJsCerNum = (e) => {
+        // let fcmToken = android.();
+        console.log('##########callJsCerNum##########');
+        let data = {
+            token : global.appToken,
+        }
+        console.log('typeof(data) =>', typeof(data));
+        console.log('data =>', data);
+        axios.post(global.ipAddress+":8888/android/fcm/pushCerNum"
+            , data
+            , { headers: {"Content-Type": "application/json", }}
+        ).then(res => {
+            console.log('typeof(res) =>', typeof(res));
+            console.log('res.data => ',res.data);
+        }).catch((error) => {
+            console.log(error);
         })
     }
 

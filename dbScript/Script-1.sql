@@ -1,7 +1,7 @@
 -- [ 회원 ] tb_memb 전체 조회
-SELECT memb_sn, memb_id, memb_nm, memb_pwd, memb_cls, 
+SELECT memb_sn, memb_id, memb_nm, email_addr, memb_pwd, memb_cls, 
 	frst_regist_dt, frst_regist_memb_sn, last_change_dt, last_regist_memb_sn, use_yn, detail_addr,
-	email_addr, last_login_dtm,  memb_status_cd, mobile_no, zip_addr, zip_cd
+	 last_login_dtm,  memb_status_cd, mobile_no, zip_addr, zip_cd
 FROM public.tb_memb order by 1 desc;
 --delete from tb_memb_money;
 
@@ -12,8 +12,8 @@ FROM public.tb_memb_money order by 1 desc;
 update tb_memb_money set money_blce = 500 where money_sn = 1;
 
 -- [ 머니 거래 이력 ] tb_money_transfer_hst 전체 조회 
-SELECT money_transfer_hst_sn, transfer_amt, memb_sn, buy_hst_sn, pay_transfer_no, transfer_ty_cd,
-	frst_regist_dt, frst_regist_memb_sn, last_change_dt, last_regist_memb_sn, use_yn, 
+SELECT money_transfer_hst_sn, transfer_amt, memb_sn, frst_regist_dt, buy_hst_sn, pay_transfer_no, transfer_ty_cd,
+	frst_regist_memb_sn, last_change_dt, last_regist_memb_sn, use_yn, 
 	pay_mean_cd
 FROM public.tb_money_transfer_hst order by 1 desc;
 

@@ -49,11 +49,17 @@ public class AndroidController {
 		log.debug("\n	Android fcm push !"
 				+ "\n	param => {}", param.get("cate"));
 		Map<String, Object> map = new HashMap<>();
-//		for (Entry<String, Map<String, Object>> entry : map.entrySet()) {
-//			
-//		}
 		map.put("param", param);
 		map.put("result", fcmService.sendPush(param));
+		return map;
+	}
+	@PostMapping("/android/fcm/pushCerNum")
+	public @ResponseBody Map<String, Object> pushCerNum(@RequestBody Map<String, Object> param){
+		log.debug("\n	Android fcm push !"
+				+ "\n	param => {}", param.get("cate"));
+		Map<String, Object> map = new HashMap<>();
+		map.put("param", param);
+		map.put("result", fcmService.pushCerNum(param));
 		return map;
 	}
 	

@@ -1,22 +1,21 @@
 import React, { useState, forwardRef, useEffect, useCallback } from 'react';
-// import "../../Charge/css/charge.css";
 import "../css/history.css";
 import '../css/sidebar.css';
-import Table from 'react-bootstrap/Table';
-import Sidebar from "./Sidebar";
-import DatePicker from "react-datepicker";
-import { ko } from 'date-fns/esm/locale';
+// import Table from 'react-bootsTrap/Table';
 import axios from 'axios';
 import MoneyHstList from './component/MoneyHstList';
 import Paging from './component/Paging';
 import moment, { now } from 'moment';
 // 선언하지 않아도, 디바이스 혹은 locale의 시간을 불러온다. 
 import 'moment/locale/ko';	// 대한민국
-import { Route, Routes } from 'react-router-dom';
+import {Table, Thead, Tbody, Tr, Th, Td} from 'react-super-responsive-table';
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
+import { useMemo } from 'react';
 
 // startDate endDate
-function History(props) {
+function History2(props) {
 
+    console.log('History2  랜더링 ~~~~~');
     const today = new Date();
     var nowTime = moment().format('YYYY-MM-DD');
     console.log('nowTime => ', nowTime);
@@ -59,31 +58,28 @@ function History(props) {
     };
 
     // date
-    useEffect(() => {
-        console.log(`startDate ${startDate} \n ~ endDate ${endDate}`);
-        console.log('typeof(startDate) => ', typeof(startDate)); 
-    }, [startDate, endDate]);
+    // useEffect(() => {
+    //     console.log(`startDate ${startDate} \n ~ endDate ${endDate}`);
+    //     console.log('typeof(startDate) => ', typeof(startDate)); 
+    // }, [startDate, endDate]);
 
-    // onDateStart date => setStartDate(date)
-    // const onDateStart = (startDate) => {
-        // string 타입으로 보내서 백 단에서 타임스탬프 타입으로 변환해보자!
-        // var res = parseInt(moment(startDate).format().split("T")[0].replaceAll("-",""));
-        // setStartDate(res);
-        // console.log('typeof(startDate) => ', typeof(startDate)); 
-        // console.log('startDate => ', startDate); // 여기선 res 적용안됨 ㅠ 느림
-    // }
+    const startVal = new Date(startDate);
+    const endVal = new Date(endDate);
     // ============ 날짜 선택 시 ============
     const handleStartDate = (e) => {
         let val = e.target.value;
         console.log('val => ',val);
         console.log('typeof(val) => ', typeof(val)); 
-        setStartDate(val);
+        setStartDate(() => val);
+        // setStartDate(() => startVal);
     }
     const handleEndDate = (e) => {
         let val = e.target.value;
         console.log('val => ',val);
         console.log('typeof(val) => ', typeof(val)); 
-        setEndDate(val);
+        setEndDate(() => val);
+        // setEndDate(() => endVal);
+
     }
 
     useEffect(() => { 
@@ -104,9 +100,9 @@ function History(props) {
             // console.log('typeof(res) =>', typeof(res))
             // console.log('typeof res.data => ', typeof(res.data));
             // console.log('조인!!! res.data.content => ', res.data.content);
-            setCount(res.data.totalElements);
+            setCount(() => res.data.totalElements);
             console.log("currentPage =>", currentPage);
-            setHstList(res.data.content);
+            setHstList(() => res.data.content);
         }).catch((error) => {
             console.log(error);
         })
@@ -133,9 +129,9 @@ function History(props) {
                 // console.log('typeof(res) =>', typeof(res))
                 // console.log('typeof res.data => ', typeof(res.data));
                 // console.log('조인!!! res.data.content => ', res.data.content);
-                setCount(res.data.totalElements);
+                setCount(() => res.data.totalElements);
                 console.log("searchCurrentPage23131 =>", searchCurrentPage);
-                setHstList(res.data.content);
+                setHstList(() => res.data.content);
             }).catch((error) => {
                 console.log(error);
             })
@@ -153,9 +149,9 @@ function History(props) {
             axios.post(url)
             .then((res) => {
                 console.log('조회 res =>', res);
-                setCount(res.data.totalElements);
+                setCount(() => res.data.totalElements);
                 console.log("searchCurrentPage =>", searchCurrentPage);
-                setHstList(res.data.content);
+                setHstList(() => res.data.content);
             }).catch((error) => {
                 console.log(error);
             })
@@ -165,27 +161,16 @@ function History(props) {
     // ============ 결제수단 버튼 클릭 ============ 
     const onClickPayMeanCd = (e) => {
         let meanVal = e.target.value;
-        setPayMeanCd(meanVal);
+        setPayMeanCd(() => meanVal);
         console.log('결제수단 클릭! => ', e.target.value);
         console.log('typeof(meanVal) => ', typeof(meanVal));
     }
     // ============ "조회" 버튼 ver.2 - onSearch ============ startDate endDate ******************
     const onSearch = (e) => {
         console.log("****************** onSearch ******************");
-        setSearchCurrentPage(() => 1);
-        setPostPerPage(() => 10);
+        // setSearchCurrentPage(() => 1);
+        // setPostPerPage(() => 10);
         console.log('searchCurrentPage => ', searchCurrentPage);
-        // e.preventDefault();
-        
-        // 거래기간 startDate 
-        // var startRes = parseInt(moment(startDate).format().split("T")[0].replaceAll("-","")); // ver.1
-        // setStartDate(startRes);
-        // var startRes = parseInt(moment(startDate).format().split("T")[0]);   // ver.2
-
-        // 거래기간 endDate 
-        // var endRes = parseInt(moment(endDate).format().split("T")[0].replaceAll("-",""));
-        // setEndDate(endRes);
-        // console.log(`startRes : ${startRes} , startDate : ${startDate} \n   payMeanCd : ${payMeanCd}`);
         if(startDate == "" || endDate == ""){
             let membSn = sessionStorage.getItem("membSn");
             console.log('onSearch 거래기간 & 결제수단 조회 1111111')
@@ -227,86 +212,63 @@ function History(props) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
     return (
+        <>
         <div className="history_wrap">
-        <Table responsive>
-            <tbody>
-            <tr>
-                <td>거래기간</td>
-                <td>
-                    {/* <DatePicker 
-                    selected={startDate}
-                    onChange={date => setStartDate(date)}
-                    customInput={<ExampleCustomInput />}
-                    locale={ko}
-                    dateFormat="yyyy년 MM월 dd일"
-                    // selectsStart
-                    startDate={startDate}
-                    endDate={endDate}
-                    minDate={""}
-                    /> */}
+        <Table >
+            <Tbody>
+            <Tr>
+                <Td>거래기간</Td>
+                <Td>
                     <input type='date' name='startDate' id='startDate'
-                        onChange={handleStartDate } value={startDate} // value={moment(this).format("YYYY-MM-DD")}
+                        onChange={handleStartDate } value={startDate} // value={moment(This).format("YYYY-MM-DD")}
                     />
-                </td>
-                <td>~</td>
-                <td>
-                    {/* <DatePicker 
-                    selected={endDate}
-                    onChange={date => setEndDate(date)}
-                    customInput={<ExampleCustomInput />}
-                    locale={ko}
-                    dateFormat="yyyy년 MM월 dd일"
-                    // selectsEnd
-                    endDate={endDate}
-                    startDate={startDate}
-                    minDate={startDate}
-                    /> */}
+                </Td>
+                <Td>~</Td>
+                <Td>
                     <input type='date' name='endDate' id='endDate'
                         onChange={handleEndDate } value={endDate} 
                         min={startDate} 
                     />
-                </td>
-                <td >결제수단</td>
-                <td>
+                </Td>
+                <Td >결제수단</Td>
+                <Td>
                     <select defaultValue={"00"} onChange={onClickPayMeanCd}>
                         <option value="00">모든 결제수단</option>
                         <option value="03">자체머니결제</option>
                         <option value="01">카드</option>
                         <option value="02">계좌이체</option>
                     </select>
-                </td>
-                <td>
+                </Td>
+                <Td>
                     {/* ===== 버튼 ===== */}
-                    <button onClick={onSearch} type="button"
+                    <button onClick={onSearch} type='button'
                         className='btn btn-secondary' >
                         조회
                     </button>
-                </td>
-            </tr>
-            </tbody>
+                </Td>
+            </Tr>
+            </Tbody>
         </Table>
 
         <div >
-        <Table responsive>
-            <thead>
-            <tr>
-                <th>일자</th>
-                <th>처리구분</th>
-                <th>결제수단</th>
-                <th>상품명</th>
-                <th>가맹점명</th>
-                <th>처리금액</th>
-                <th>처리상태</th>
-            </tr>
-            </thead>
-            <tbody>
+        <Table >
+            <Thead>
+            <Tr className="target_tr">
+                <Th>일자</Th>
+                <Th>처리구분</Th>
+                <Th>결제수단</Th>
+                <Th>상품명</Th>
+                <Th>가맹점명</Th>
+                <Th>처리금액</Th>
+                <Th>처리상태</Th>
+            </Tr>
+            </Thead>
+            <Tbody>
                 <MoneyHstList hstList={hstList}/>
-            </tbody>
+            </Tbody>
         </Table>
         {/* <CallPage/> */}
         {
-        // <Paging page={currentPage} count={count} setPage={setPage} 
-        //         indexOfLastPost={indexOfLastPost} />
             payMeanCd =="00" && startDate == ""
             ? <Paging page={currentPage} count={count} setPage={setPage} 
                 indexOfLastPost={indexOfLastPost} />
@@ -314,12 +276,11 @@ function History(props) {
                 indexOfLastPost={indexOfLastPost} />
         }
         </div>
-
-        
         </div>
+        </>
 
     );
 
 }
 
-export default History;
+export default History2;
