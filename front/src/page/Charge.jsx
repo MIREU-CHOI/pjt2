@@ -142,6 +142,7 @@ function Charge(props) {
                     setMoney("");
                     console.log('머니충전액 입력창 => ', money);
                     console.log('=========== 머니 충전 성공하였습니다 ============');
+                    window.confirm(money+'원 충전 완료되었습니다!'); // alert 로도 알려주고 
                     navigate("/main/history");
                 }
             }).catch((error) => {

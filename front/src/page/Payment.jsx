@@ -134,7 +134,7 @@ const Payment = (effect, deps) => {
             window.confirm(goodsAmt+'원 결제 완료되었습니다!'); // alert 로도 알려주고 
             callJsPay();   // push 알림도 보내자!
             // }
-            navigate("/main/history");
+            navigate("/main/history"); 
         }).catch((error) => {
             console.log(error);
         })
