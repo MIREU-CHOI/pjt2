@@ -141,14 +141,10 @@ public class LoginActivity extends AppCompatActivity {
                                         tokenDTO.getMembId()+"님, 환영합니다! ^o^", Toast.LENGTH_SHORT);
                                 toast.show();
 
-//                            editor.putString("membId", tokenDTO.getMembId());
-//                            editor.putLong("membSn", tokenDTO.getMembSn());
-//                            editor.putString("accessToken", tokenDTO.getAccessToken());
                                 Gson gson = new Gson();
                                 String data = gson.toJson(tokenDTO);
                                 editor.putString("data", data);
                                 editor.apply(); // commit()은 동기, apply()는 비동기 처리
-//                            String id = sharedPreferences.getString("membId", "membId");
                                 Log.d("[login]", "id => "+userId+"\n pwd => "+userPwd);
                                 Intent intent = new Intent(LoginActivity.this, WebViewActivity.class);
                                 intent.putExtra("msg", "from login");

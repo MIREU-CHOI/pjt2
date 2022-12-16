@@ -49,13 +49,9 @@ public class SendEmailService {
         String pwd = passwordEncoder.encode(str);
         Optional<Member> memb = memberRepository.findByMembId(dto.getMembId());
         Member member = memberRepository.findById(memb.get().getMembSn()).orElse(null);
-//        Member member = dto.toEntity(passwordEncoder);
         log.debug("SendEmailService updatePassword\n	"
         		+ "비번 바꿀 MembSn => {}\n	바뀐 비번 => {}"
-//        		, member.get().getMembSn(), pwd);
         		, member.getMembSn(), pwd);
-//        memberRepository.updateUserPassword(membId,pw);
-//        member.get().setMembPwd(pwd);
         member.setMembPwd(pwd);
         memberRepository.save(member);
     }

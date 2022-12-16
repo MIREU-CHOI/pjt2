@@ -81,7 +81,7 @@ public class MemberController {
     	MailDTO mailDto = sendEmailService.createMailAndChangePassword(dto);
         sendEmailService.mailSend(mailDto);
     }
- // 등록된 이메일로 임시비밀번호를 발송하고 발송된 임시비밀번호로 사용자의 pw를 변경하는 컨트롤러
+    // 안드로이드용 - 등록된 이메일로 임시비밀번호를 발송하고 발송된 임시비밀번호로 사용자의 pw를 변경하는 컨트롤러
     @PostMapping("/android/findPwd/sendEmail")
     public void androidSendEmail( MemberDTO dto){
     	String membId = dto.getMembId();
