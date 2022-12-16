@@ -85,8 +85,10 @@ public class FcmService {
                 .setToken((String)param.get("token")) // 리액트 axois로 보낸 토큰을 set해주면 됨! 
                 .build();
         try {
+        	log.debug("\n	푸시 알람 성공!!!");
             return  FirebaseMessaging.getInstance().send(message);
         } catch (FirebaseMessagingException e) {
+        	log.debug("\n	푸시 알람 실패???");
             e.printStackTrace();
         }
         return "fail";

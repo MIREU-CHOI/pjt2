@@ -131,18 +131,18 @@ public class SignupActivity extends AppCompatActivity {
                             String token = StaticFinalLabelsClass.APP_TOKEN;
                             Map<String, Object> map = new HashMap<>();
                             map.put("token", token);
-                            Call<String> request_token = retrofitService.pushCerNum(map);
+                            Call<Map<String, Object>> request_token = retrofitService.pushCerNum(map);
                             certNum = response.body();
-                            request_token.enqueue(new Callback<String>() {
+                            request_token.enqueue(new Callback<Map<String, Object>>() {
                                 @Override
-                                public void onResponse(Call<String> call, Response<String> response) {
+                                public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
                                     Log.d("[phoneChk]", "\n phoneChk 콜백!!! onResponse: 성공,\n결과"+ certNum);
                                     Toast toast = Toast.makeText(getApplicationContext(),
                                             "인증번호가 전송되었습니다.", Toast.LENGTH_SHORT);
                                     toast.show();
                                 }
                                 @Override
-                                public void onFailure(Call<String> call, Throwable t) {
+                                public void onFailure(Call<Map<String, Object>> call, Throwable t) {
                                     Log.d("[phoneChk]", "\n phoneChk 콜백!!! onFailure => "+t.getMessage());
                                 }
                             });

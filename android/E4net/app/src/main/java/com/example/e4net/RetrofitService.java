@@ -21,7 +21,7 @@ public interface RetrofitService {
     Call<String> sendSMS(@Path("mobileNo") String mobileNo);
     // 휴대폰 - 인증번호 푸시알람 보내기
     @POST("/android/fcm/pushCerNum")
-    Call<String> pushCerNum(@Body Map<String,Object> appToken);
+    Call<Map<String, Object>> pushCerNum(@Body Map<String,Object> param);
 
     // 회원 "가입하기" 버튼
     @POST("/auth/signup")

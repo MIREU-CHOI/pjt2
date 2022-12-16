@@ -47,7 +47,7 @@ public class AndroidController {
 	@PostMapping("/android/fcm/push")
 	public @ResponseBody Map<String, Object> sendFcmPush(@RequestBody Map<String, Object> param){
 		log.debug("\n	Android fcm push !"
-				+ "\n	param => {}", param.get("cate"));
+				+ "\n	param => {}", param.get("token"));
 		Map<String, Object> map = new HashMap<>();
 		map.put("param", param);
 		map.put("result", fcmService.sendPush(param));
@@ -56,7 +56,7 @@ public class AndroidController {
 	@PostMapping("/android/fcm/pushCerNum")
 	public @ResponseBody Map<String, Object> pushCerNum(@RequestBody Map<String, Object> param){
 		log.debug("\n	Android fcm push !"
-				+ "\n	param => {}", param.get("cate"));
+				+ "\n	param => {}", param.get("token"));
 		Map<String, Object> map = new HashMap<>();
 		map.put("param", param);
 		map.put("result", fcmService.pushCerNum(param));
